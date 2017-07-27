@@ -1,0 +1,3740 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.5.25
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema lab8
+--
+
+CREATE DATABASE IF NOT EXISTS lab8;
+USE lab8;
+
+--
+-- Definition of table `hms_adm_prescn_subcode`
+--
+
+DROP TABLE IF EXISTS `hms_adm_prescn_subcode`;
+CREATE TABLE `hms_adm_prescn_subcode` (
+  `PRES_SUB_CODE` varchar(14) NOT NULL,
+  `SPECIALITY_CODE` varchar(5) NOT NULL,
+  `DIAGNOSIS_CODE` varchar(50) NOT NULL,
+  `AGE_GROUP_CODE` varchar(25) NOT NULL,
+  `SUB_DIAGNOSIS_CODE` varchar(50) NOT NULL,
+  `PRES_SUB_CODE_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `PRES_STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`PRES_SUB_CODE`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `FK_AGE_GROUP_CODE` (`AGE_GROUP_CODE`),
+  CONSTRAINT `FK_AGE_GROUP_CODE` FOREIGN KEY (`AGE_GROUP_CODE`) REFERENCES `hms_admin_age_group` (`AGE_GROUP_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_adm_prescn_subcode`
+--
+
+/*!40000 ALTER TABLE `hms_adm_prescn_subcode` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_adm_prescn_subcode` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_account_groups`
+--
+
+DROP TABLE IF EXISTS `hms_admin_account_groups`;
+CREATE TABLE `hms_admin_account_groups` (
+  `ACCOUNT_TYPE` varchar(100) NOT NULL,
+  `ACCOUNT_GROUP_NAME` varchar(25) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `STATUS` varchar(20) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `ACCOUNT_GROUP_NAME` (`ACCOUNT_GROUP_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_account_groups`
+--
+
+/*!40000 ALTER TABLE `hms_admin_account_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_account_groups` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_account_heads`
+--
+
+DROP TABLE IF EXISTS `hms_admin_account_heads`;
+CREATE TABLE `hms_admin_account_heads` (
+  `ACCOUNT_NAME` varchar(100) NOT NULL,
+  `ACCOUNT_TYPE` varchar(25) NOT NULL,
+  `ACCOUNT_GROUP` varchar(25) NOT NULL,
+  `ACCOUNT_SUB_CLASS` varchar(100) DEFAULT NULL,
+  `CASHFLOW` varchar(100) DEFAULT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `STATUS` varchar(20) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `ISMODIFY` varchar(3) NOT NULL,
+  `ACCOUNT_CODE` int(8) DEFAULT NULL,
+  `IS_HOSPITAL_AC` varchar(4) DEFAULT NULL,
+  `ACCTYPE` varchar(5) DEFAULT NULL,
+  `SUPPLIER_ID` int(6) DEFAULT NULL,
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `ACCOUNT_NAME` (`ACCOUNT_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_account_heads`
+--
+
+/*!40000 ALTER TABLE `hms_admin_account_heads` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_account_heads` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_account_sub_groups`
+--
+
+DROP TABLE IF EXISTS `hms_admin_account_sub_groups`;
+CREATE TABLE `hms_admin_account_sub_groups` (
+  `ACCOUNT_TYPE` varchar(100) NOT NULL,
+  `ACCOUNT_GROUP_NAME` varchar(25) NOT NULL,
+  `ACCOUNT_SUB_GROUP_NAME` varchar(25) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `STATUS` varchar(20) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_account_sub_groups`
+--
+
+/*!40000 ALTER TABLE `hms_admin_account_sub_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_account_sub_groups` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_age_group`
+--
+
+DROP TABLE IF EXISTS `hms_admin_age_group`;
+CREATE TABLE `hms_admin_age_group` (
+  `AGE_GROUP_CODE_PREFIX` varchar(5) NOT NULL,
+  `AGE_GROUP_CODE` varchar(25) NOT NULL,
+  `AGE_GROUP_NAME` varchar(25) NOT NULL,
+  `AGE_GROUP_DESC` varchar(50) DEFAULT NULL,
+  `AGE_GROUP_LLIMIT` smallint(6) DEFAULT NULL,
+  `AGE_GROUP_ULIMIT` smallint(6) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `AGE_STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`AGE_GROUP_CODE_PREFIX`),
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `AGE_GROUP_CODE` (`AGE_GROUP_CODE`),
+  UNIQUE KEY `AGE_GROUP_NAME` (`AGE_GROUP_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_age_group`
+--
+
+/*!40000 ALTER TABLE `hms_admin_age_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_age_group` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_billing_options`
+--
+
+DROP TABLE IF EXISTS `hms_admin_billing_options`;
+CREATE TABLE `hms_admin_billing_options` (
+  `BILLING_OPTIONS` smallint(3) DEFAULT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_billing_options`
+--
+
+/*!40000 ALTER TABLE `hms_admin_billing_options` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_billing_options` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_billing_rules`
+--
+
+DROP TABLE IF EXISTS `hms_admin_billing_rules`;
+CREATE TABLE `hms_admin_billing_rules` (
+  `CATEGORY_TYPE` varchar(25) NOT NULL,
+  `SERVICE_NO_OF_DAYS` smallint(3) DEFAULT NULL,
+  `SERVICE_NO_OF_VISITS` smallint(3) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_billing_rules`
+--
+
+/*!40000 ALTER TABLE `hms_admin_billing_rules` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_billing_rules` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_box_option`
+--
+
+DROP TABLE IF EXISTS `hms_admin_box_option`;
+CREATE TABLE `hms_admin_box_option` (
+  `BOX_OPTION` varchar(5) DEFAULT NULL,
+  `REPORT_OPTION` varchar(5) DEFAULT NULL,
+  `DUE_OPTION` varchar(5) DEFAULT NULL,
+  `DUE_RECS_IN_REF_REPORT` varchar(5) DEFAULT NULL,
+  `GROUP_OPTION` varchar(5) DEFAULT NULL,
+  `INTERPRETATION_NOTES` varchar(5) DEFAULT NULL,
+  `REPORT_HEADER` varchar(5) DEFAULT NULL,
+  `PATIENT_DETAILS` varchar(5) DEFAULT NULL,
+  `UNIT_NRANGE` varchar(5) DEFAULT NULL,
+  `HEADERIMAGE_IN_REPORT` varchar(5) DEFAULT NULL,
+  `METHOD_TYPE` varchar(5) DEFAULT NULL,
+  `GROUP_BOX` varchar(5) DEFAULT NULL,
+  `METHOD_DISPLAY_TYPE` varchar(5) DEFAULT NULL,
+  `DISPLAY_TIME` varchar(3) DEFAULT '0',
+  `DISPLAY_EOR` varchar(3) DEFAULT '0',
+  `ILAB_IN_REPORT` varchar(5) DEFAULT NULL,
+  `BIOPSY_HIDDEN` varchar(10) DEFAULT NULL,
+  `SAMPLE_HIDDEN` varchar(10) DEFAULT NULL,
+  `PAT_FROM_HIDDEN` varchar(10) DEFAULT NULL,
+  `SUBDR_HIDDEN` varchar(10) DEFAULT NULL,
+  `NAME_HIDDEN` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_box_option`
+--
+
+/*!40000 ALTER TABLE `hms_admin_box_option` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_box_option` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_cbc_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_cbc_details`;
+CREATE TABLE `hms_admin_cbc_details` (
+  `SL_NO` int(3) NOT NULL,
+  `DEVICE_PARAM_NAME` varchar(50) NOT NULL,
+  `SOFTWARE_PARAM_NAME` varchar(100) DEFAULT NULL,
+  UNIQUE KEY `SL_NO` (`SL_NO`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_cbc_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_cbc_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_cbc_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_charges`
+--
+
+DROP TABLE IF EXISTS `hms_admin_charges`;
+CREATE TABLE `hms_admin_charges` (
+  `WARD` varchar(50) NOT NULL,
+  `SERVICECODE` int(6) NOT NULL,
+  `SERVICENAME` varchar(50) NOT NULL,
+  `EMP_ID` int(10) DEFAULT NULL,
+  `CATEGORY` varchar(50) NOT NULL,
+  `SERVICERATE` float(8,2) NOT NULL DEFAULT '0.00',
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `Referral_Amount` float(8,2) DEFAULT '0.00',
+  `MAINTENANCE` float(8,2) DEFAULT '0.00',
+  `DOCTOR_NAME` varchar(50) DEFAULT 'Self',
+  `DOCTOR_ID` int(10) NOT NULL DEFAULT '0',
+  `TARIFFTYPE` varchar(50) NOT NULL DEFAULT 'Lab',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_charges`
+--
+
+/*!40000 ALTER TABLE `hms_admin_charges` DISABLE KEYS */;
+INSERT INTO `hms_admin_charges` (`WARD`,`SERVICECODE`,`SERVICENAME`,`EMP_ID`,`CATEGORY`,`SERVICERATE`,`ID`,`Referral_Amount`,`MAINTENANCE`,`DOCTOR_NAME`,`DOCTOR_ID`,`TARIFFTYPE`) VALUES 
+ ('Self',11,'CBC',NULL,'Laboratory Services',88.00,1,0.00,0.00,NULL,2,'Lab'),
+ ('Self',22,'HBC',NULL,'Laboratory Services',88.00,2,0.00,0.00,NULL,2,'Lab'),
+ ('Self',44,'Bilirubin',NULL,'Laboratory Services',88.00,3,0.00,0.00,NULL,2,'Lab'),
+ ('Self',11,'CBC',NULL,'Laboratory Services',33.00,4,0.00,0.00,NULL,1,'Doctor'),
+ ('Self',22,'HBC',NULL,'Laboratory Services',33.00,5,0.00,0.00,NULL,1,'Doctor'),
+ ('Self',44,'Bilirubin',NULL,'Laboratory Services',33.00,6,0.00,0.00,NULL,1,'Doctor'),
+ ('Self',3232,'A/G Ratio',NULL,'Laboratory Services',88.00,7,0.00,0.00,NULL,2,'Lab'),
+ ('Self',5345,'X-Ray',NULL,'Laboratory Services',0.00,8,0.00,0.00,NULL,0,'Lab');
+/*!40000 ALTER TABLE `hms_admin_charges` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_company_contacts`
+--
+
+DROP TABLE IF EXISTS `hms_admin_company_contacts`;
+CREATE TABLE `hms_admin_company_contacts` (
+  `ID` int(6) NOT NULL,
+  `CONTACT_PERSON_NAME` varchar(50) DEFAULT NULL,
+  `PHONE_NUMBER` varchar(13) DEFAULT NULL,
+  `MOBILE_NUMBER` varchar(13) DEFAULT NULL,
+  `E_MAIL` varchar(50) DEFAULT NULL,
+  `SLNO` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`SLNO`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_company_contacts`
+--
+
+/*!40000 ALTER TABLE `hms_admin_company_contacts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_company_contacts` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_company_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_company_details`;
+CREATE TABLE `hms_admin_company_details` (
+  `COMPANY_NAME` varchar(75) NOT NULL,
+  `ADDRESS_LINE1` varchar(150) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(150) DEFAULT NULL,
+  `CITY` varchar(25) NOT NULL,
+  `STATE` varchar(25) DEFAULT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(13) DEFAULT NULL,
+  `PHONE_NUMBER2` varchar(13) DEFAULT NULL,
+  `MOBILE_NUMBER1` varchar(13) DEFAULT NULL,
+  `FAX_NUMBER` varchar(13) DEFAULT NULL,
+  `E_MAIL` varchar(50) DEFAULT NULL,
+  `DL_NO` varchar(50) DEFAULT NULL,
+  `CST` varchar(50) DEFAULT NULL,
+  `VAT` varchar(50) DEFAULT NULL,
+  `TIN` varchar(50) DEFAULT NULL,
+  `STATUS` varchar(10) NOT NULL,
+  `COMPANY_TYPE` varchar(10) NOT NULL,
+  `INSURANCE_TYPE` varchar(10) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `REPORT_HEADING` varchar(500) DEFAULT NULL,
+  `ACCOUNT_CODE` int(6) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_company_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_company_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_company_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_company_tariffs`
+--
+
+DROP TABLE IF EXISTS `hms_admin_company_tariffs`;
+CREATE TABLE `hms_admin_company_tariffs` (
+  `COMPANY_NAME` varchar(50) NOT NULL,
+  `COMPANY_ID` int(6) NOT NULL,
+  `CATEGORY` varchar(50) NOT NULL,
+  `WARD` varchar(50) NOT NULL,
+  `SERVICENAME` varchar(50) NOT NULL,
+  `SERVICECODE` int(6) NOT NULL,
+  `SERVICE_VALID_FOR_COMPANY` varchar(6) NOT NULL,
+  `EMP_ID` int(10) DEFAULT NULL,
+  `BASE_RATE` float(8,2) NOT NULL,
+  `COMPANY_TARIFF` float(8,2) NOT NULL,
+  `Referral_Amount` float(8,2) DEFAULT NULL,
+  `MAINTENANCE` float(8,2) DEFAULT '0.00',
+  `DOCTOR_NAME` varchar(50) DEFAULT 'Self',
+  `DOCTOR_ID` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`WARD`,`SERVICECODE`,`DOCTOR_ID`,`COMPANY_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_company_tariffs`
+--
+
+/*!40000 ALTER TABLE `hms_admin_company_tariffs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_company_tariffs` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_department`
+--
+
+DROP TABLE IF EXISTS `hms_admin_department`;
+CREATE TABLE `hms_admin_department` (
+  `DEPTNAME` varchar(25) NOT NULL,
+  `DEPTDESC` varchar(50) DEFAULT NULL,
+  `DEPT_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `DEPTSTATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`DEPT_ID`),
+  UNIQUE KEY `DEPT_ID` (`DEPT_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_department`
+--
+
+/*!40000 ALTER TABLE `hms_admin_department` DISABLE KEYS */;
+INSERT INTO `hms_admin_department` (`DEPTNAME`,`DEPTDESC`,`DEPT_ID`,`DEPTSTATUS`) VALUES 
+ ('Radiology','X RAYS',1,'Active'),
+ ('lab','lab',2,'Active'),
+ ('external lab',NULL,3,'Active');
+/*!40000 ALTER TABLE `hms_admin_department` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_device_communication`
+--
+
+DROP TABLE IF EXISTS `hms_admin_device_communication`;
+CREATE TABLE `hms_admin_device_communication` (
+  `COMMUNICATION_WITH` varchar(10) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_device_communication`
+--
+
+/*!40000 ALTER TABLE `hms_admin_device_communication` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_device_communication` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_diagnosis`
+--
+
+DROP TABLE IF EXISTS `hms_admin_diagnosis`;
+CREATE TABLE `hms_admin_diagnosis` (
+  `DIAGNOSIS_CODE_PREFIX` varchar(3) NOT NULL,
+  `DIAGNOSIS_CODE` varchar(50) NOT NULL,
+  `DIAGNOSIS_NAME` varchar(50) NOT NULL,
+  `DIAGNOSIS_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `DIAGNOSIS_STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `DIAGNOSIS_CODE` (`DIAGNOSIS_CODE`),
+  UNIQUE KEY `DIAGNOSIS_NAME` (`DIAGNOSIS_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_diagnosis`
+--
+
+/*!40000 ALTER TABLE `hms_admin_diagnosis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_diagnosis` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_discharge_template`
+--
+
+DROP TABLE IF EXISTS `hms_admin_discharge_template`;
+CREATE TABLE `hms_admin_discharge_template` (
+  `TEMPLATE_NAME` varchar(50) NOT NULL,
+  `TEMPLATE_DESC` varchar(5000) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_discharge_template`
+--
+
+/*!40000 ALTER TABLE `hms_admin_discharge_template` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_discharge_template` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_doctor_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_doctor_details`;
+CREATE TABLE `hms_admin_doctor_details` (
+  `EMP_ID` int(10) NOT NULL,
+  `EMP_FIRST_NAME` varchar(20) NOT NULL,
+  `EMP_MIDDLE_NAME` varchar(20) DEFAULT NULL,
+  `EMP_LAST_NAME` varchar(20) NOT NULL,
+  `DOCTOR_LICENCE_NO` varchar(20) NOT NULL,
+  `DOCTOR_SPECIALITY` varchar(50) DEFAULT NULL,
+  `DOCTOR_AVAILABILITY` varchar(25) NOT NULL,
+  `DOCTOR_QUALIFICATION` varchar(25) DEFAULT NULL,
+  `DOCTOR_EXPERIENCE` tinyint(3) DEFAULT NULL,
+  KEY `FK_EMP_ID` (`EMP_ID`),
+  CONSTRAINT `FK_EMP_ID` FOREIGN KEY (`EMP_ID`) REFERENCES `hms_admin_employee` (`EMP_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_doctor_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_doctor_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_doctor_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_doctor_schedule`
+--
+
+DROP TABLE IF EXISTS `hms_admin_doctor_schedule`;
+CREATE TABLE `hms_admin_doctor_schedule` (
+  `EMP_ID` int(10) NOT NULL,
+  `WEEKDAY` varchar(15) NOT NULL,
+  `SLOT1_FROM` int(2) NOT NULL,
+  `SLOT1_TO` int(2) NOT NULL,
+  `SLOT2_FROM` int(2) NOT NULL,
+  `SLOT2_TO` int(2) NOT NULL,
+  `SLOT3_FROM` int(2) NOT NULL,
+  `SLOT3_TO` int(2) NOT NULL,
+  KEY `FK_EMP_ID2` (`EMP_ID`),
+  CONSTRAINT `FK_EMP_ID2` FOREIGN KEY (`EMP_ID`) REFERENCES `hms_admin_employee` (`EMP_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_doctor_schedule`
+--
+
+/*!40000 ALTER TABLE `hms_admin_doctor_schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_doctor_schedule` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_doctor_specialities`
+--
+
+DROP TABLE IF EXISTS `hms_admin_doctor_specialities`;
+CREATE TABLE `hms_admin_doctor_specialities` (
+  `SPECIALITY_NAME` varchar(100) NOT NULL,
+  `SPECIALITY_STATUS` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_doctor_specialities`
+--
+
+/*!40000 ALTER TABLE `hms_admin_doctor_specialities` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_doctor_specialities` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_doctor_timings`
+--
+
+DROP TABLE IF EXISTS `hms_admin_doctor_timings`;
+CREATE TABLE `hms_admin_doctor_timings` (
+  `TIMING_FROM` varchar(10) DEFAULT NULL,
+  `TIMING_TO` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_doctor_timings`
+--
+
+/*!40000 ALTER TABLE `hms_admin_doctor_timings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_doctor_timings` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_drug_suppliers_dtls`
+--
+
+DROP TABLE IF EXISTS `hms_admin_drug_suppliers_dtls`;
+CREATE TABLE `hms_admin_drug_suppliers_dtls` (
+  `SUPPLIER_NAME` varchar(75) NOT NULL,
+  `ADDRESS_LINE1` varchar(150) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(150) DEFAULT NULL,
+  `CITY` varchar(25) NOT NULL,
+  `STATE` varchar(25) DEFAULT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(13) DEFAULT NULL,
+  `PHONE_NUMBER2` varchar(13) DEFAULT NULL,
+  `MOBILE_NUMBER1` varchar(13) DEFAULT NULL,
+  `FAX_NUMBER` varchar(13) DEFAULT NULL,
+  `E_MAIL` varchar(50) DEFAULT NULL,
+  `DL_NO` varchar(50) DEFAULT NULL,
+  `CST` varchar(50) DEFAULT NULL,
+  `VAT` varchar(50) DEFAULT NULL,
+  `TIN` varchar(50) DEFAULT NULL,
+  `STATUS` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `ACCOUNT_CODE` int(6) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_drug_suppliers_dtls`
+--
+
+/*!40000 ALTER TABLE `hms_admin_drug_suppliers_dtls` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_drug_suppliers_dtls` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_duplicate_bill_option`
+--
+
+DROP TABLE IF EXISTS `hms_admin_duplicate_bill_option`;
+CREATE TABLE `hms_admin_duplicate_bill_option` (
+  `DUP_BILL_OPTION` varchar(5) DEFAULT 'Yes',
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_duplicate_bill_option`
+--
+
+/*!40000 ALTER TABLE `hms_admin_duplicate_bill_option` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_duplicate_bill_option` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_employee`
+--
+
+DROP TABLE IF EXISTS `hms_admin_employee`;
+CREATE TABLE `hms_admin_employee` (
+  `EMP_ID` int(10) NOT NULL,
+  `EMP_SALUTATION` varchar(10) DEFAULT NULL,
+  `EMP_FIRST_NAME` varchar(50) NOT NULL,
+  `EMP_MIDDLE_NAME` varchar(20) DEFAULT NULL,
+  `EMP_LAST_NAME` varchar(20) DEFAULT NULL,
+  `EMP_BIRTH_DATE` date DEFAULT NULL,
+  `EMP_MARITAL_STATUS` varchar(1) DEFAULT NULL,
+  `EMP_GENDER` varchar(1) NOT NULL,
+  `EMP_TITLE` varchar(25) DEFAULT NULL,
+  `EMP_EMAIL` varchar(50) DEFAULT NULL,
+  `EMP_RES_PHNO` varchar(15) DEFAULT NULL,
+  `EMP_CELL_NO` varchar(15) DEFAULT NULL,
+  `EMP_OTHER_DETAILS` varchar(50) DEFAULT NULL,
+  `EMP_HIRE_DATE` date DEFAULT NULL,
+  `EMP_LAST_DATE` date DEFAULT NULL,
+  `EMP_STATUS` varchar(25) NOT NULL,
+  `PASSWORD` varchar(30) NOT NULL,
+  `DEPT_ID` int(6) DEFAULT NULL,
+  `ROLENAME` varchar(25) DEFAULT NULL,
+  `LOGIN_ID` varchar(10) DEFAULT NULL,
+  `EMPTYPE` varchar(25) NOT NULL,
+  `EMP_WORK_TYPE` varchar(25) NOT NULL,
+  `EMP_SALARY` float(8,2) DEFAULT NULL,
+  `EMP_LEAVES` int(6) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`EMP_ID`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `FK_DEPTNAME` (`DEPT_ID`),
+  KEY `FK_ROLE` (`ROLENAME`),
+  CONSTRAINT `FK_DEPTNAME` FOREIGN KEY (`DEPT_ID`) REFERENCES `hms_admin_department` (`DEPT_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_employee`
+--
+
+/*!40000 ALTER TABLE `hms_admin_employee` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_employee` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_external_lab_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_external_lab_details`;
+CREATE TABLE `hms_admin_external_lab_details` (
+  `LAB_NAME` varchar(150) NOT NULL,
+  `ADDRESS` varchar(100) NOT NULL,
+  `CITY` varchar(15) NOT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(13) NOT NULL,
+  `PHONE_NUMBER2` varchar(13) DEFAULT NULL,
+  `FAX_NUMBER` varchar(11) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `DISCOUNT_PER` int(6) NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_external_lab_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_external_lab_details` DISABLE KEYS */;
+INSERT INTO `hms_admin_external_lab_details` (`LAB_NAME`,`ADDRESS`,`CITY`,`PINCODE`,`PHONE_NUMBER1`,`PHONE_NUMBER2`,`FAX_NUMBER`,`ID`,`DISCOUNT_PER`) VALUES 
+ ('rwerew','rwerew','rwerew',NULL,'4324324',NULL,NULL,1,11),
+ ('lab2','rwerew','vskp',NULL,'312312',NULL,NULL,2,33),
+ ('rwerew','rwerew','rwerew',NULL,'4324324',NULL,NULL,3,11),
+ ('lab2','rwerew','vskp',NULL,'312312',NULL,NULL,4,33);
+/*!40000 ALTER TABLE `hms_admin_external_lab_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_financialyear`
+--
+
+DROP TABLE IF EXISTS `hms_admin_financialyear`;
+CREATE TABLE `hms_admin_financialyear` (
+  `FIN_YEAR` varchar(10) NOT NULL,
+  UNIQUE KEY `FIN_YEAR` (`FIN_YEAR`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_financialyear`
+--
+
+/*!40000 ALTER TABLE `hms_admin_financialyear` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_financialyear` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_format`
+--
+
+DROP TABLE IF EXISTS `hms_admin_format`;
+CREATE TABLE `hms_admin_format` (
+  `HEADER` text,
+  `FOOTER` text,
+  `DISPLAYOPTION` smallint(3) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `APPLY_FOR` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_format`
+--
+
+/*!40000 ALTER TABLE `hms_admin_format` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_format` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_functionality`
+--
+
+DROP TABLE IF EXISTS `hms_admin_functionality`;
+CREATE TABLE `hms_admin_functionality` (
+  `FACILITY_NAME` varchar(50) NOT NULL,
+  `FACILITY_DESC` varchar(150) DEFAULT NULL,
+  `FACILITY_STATUS` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_functionality`
+--
+
+/*!40000 ALTER TABLE `hms_admin_functionality` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_functionality` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_hospital_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_hospital_details`;
+CREATE TABLE `hms_admin_hospital_details` (
+  `HOSPITAL_NAME` varchar(50) NOT NULL,
+  `ADDRESS1` varchar(50) NOT NULL,
+  `ADDRESS2` varchar(50) DEFAULT NULL,
+  `CITY` varchar(15) NOT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(11) NOT NULL,
+  `PHONE_NUMBER2` varchar(11) DEFAULT NULL,
+  `FAX_NUMBER` varchar(11) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `DL_NO` varchar(20) DEFAULT NULL,
+  `VAT` varchar(20) DEFAULT NULL,
+  `CST` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`HOSPITAL_NAME`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_hospital_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_hospital_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_hospital_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_category`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_category`;
+CREATE TABLE `hms_admin_lab_category` (
+  `LAB_CATEGORY_NAME` varchar(25) NOT NULL,
+  `LAB_CATEGORY_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_category`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_department`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_department`;
+CREATE TABLE `hms_admin_lab_department` (
+  `DEPTNAME` varchar(25) NOT NULL,
+  `DEPTDESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `DEPTSTATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_department`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_department` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_department` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_details`;
+CREATE TABLE `hms_admin_lab_details` (
+  `LAB_NAME` varchar(150) NOT NULL,
+  `ADDRESS1` varchar(100) NOT NULL,
+  `ADDRESS2` varchar(100) DEFAULT NULL,
+  `CITY` varchar(30) NOT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(13) NOT NULL,
+  `PHONE_NUMBER2` varchar(13) DEFAULT NULL,
+  `FAX_NUMBER` varchar(11) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `REF_AMOUNT_OPTION` int(1) NOT NULL,
+  `iLab_ID` int(6) DEFAULT '0',
+  `EMAIL_ID` varchar(100) DEFAULT NULL,
+  `EMAIL_PWD` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_details` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_details` (`LAB_NAME`,`ADDRESS1`,`ADDRESS2`,`CITY`,`PINCODE`,`PHONE_NUMBER1`,`PHONE_NUMBER2`,`FAX_NUMBER`,`ID`,`REF_AMOUNT_OPTION`,`iLab_ID`,`EMAIL_ID`,`EMAIL_PWD`) VALUES 
+ ('Ramakrishna','er','er','Tadepalligudem','454545','45343434343','7878787878','146546',1,1,0,'rk@gmail.com','3243434');
+/*!40000 ALTER TABLE `hms_admin_lab_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_doctor`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_doctor`;
+CREATE TABLE `hms_admin_lab_doctor` (
+  `DOCTOR_NAME` varchar(100) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_doctor`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_doctor` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_doctor` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_doctor_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_doctor_details`;
+CREATE TABLE `hms_admin_lab_doctor_details` (
+  `DOCTOR_NAME` varchar(100) NOT NULL,
+  `QUALIFICATION` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `DISCOUNT_PER` int(6) NOT NULL,
+  `DISPLAY_IN_REPORT` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_doctor_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_doctor_details` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_doctor_details` (`DOCTOR_NAME`,`QUALIFICATION`,`ID`,`DISCOUNT_PER`,`DISPLAY_IN_REPORT`) VALUES 
+ ('Gangadhar rao','MD',1,11,'NA'),
+ ('RamaRaju','MBBS',2,12,'NA'),
+ ('Ajay','MBBS,MD',3,5,'NA'),
+ ('Gangaram','MD',4,11,'NA'),
+ ('Ajay','MBBS,MD',5,5,'NA'),
+ ('Ajay','MBBS,MD',6,5,'NA'),
+ ('dsgfsg','sgs',7,2,'NA'),
+ ('sfsf','sfdsf',8,3,'NA'),
+ ('RamaRaju','MBBS',9,12,'NA'),
+ ('AjayDevagan','MBBS,MD',10,5,'NA'),
+ ('sfsf','sfsf',11,10,'NA'),
+ ('Gangadhara sastry','MD',12,11,'NA'),
+ ('sita devi','MBBS',13,70,'NA'),
+ ('bss Maata','mbbs',14,20,'NA');
+/*!40000 ALTER TABLE `hms_admin_lab_doctor_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_feature_table`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_feature_table`;
+CREATE TABLE `hms_admin_lab_feature_table` (
+  `LAB_INVENTORY_NAME` varchar(50) NOT NULL,
+  `FEATURE_CODE` int(6) NOT NULL,
+  `IS_ACTIVE` varchar(15) NOT NULL,
+  `FEATURE_DESCRIPTION` varchar(100) DEFAULT NULL,
+  UNIQUE KEY `FEATURE_CODE` (`FEATURE_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_feature_table`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_feature_table` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_feature_table` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_features`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_features`;
+CREATE TABLE `hms_admin_lab_features` (
+  `FEATURE_CODE` int(6) NOT NULL,
+  `FEATURE_NAME` varchar(50) NOT NULL,
+  `IS_ACTIVE` varchar(3) NOT NULL,
+  `DESCRIPTION` varchar(150) DEFAULT NULL,
+  UNIQUE KEY `FEATURE_CODE` (`FEATURE_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_features`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_features` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_features` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_package`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_package`;
+CREATE TABLE `hms_admin_lab_package` (
+  `LAB_TEST_PACKAGE_NAME` varchar(50) NOT NULL,
+  `LAB_TEST_HRS` varchar(10) DEFAULT NULL,
+  `LAB_TEST_DAYS` varchar(10) DEFAULT NULL,
+  `LAB_TEST_PKG_IS_ACTIVE` varchar(10) NOT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `PACKAGE_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `LAB_TEST_CODE` int(25) NOT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) NOT NULL,
+  `DISPLAY_PROFILE` varchar(10) DEFAULT NULL,
+  `DISPLAY_GROUP` varchar(10) DEFAULT NULL,
+  `DISPLAY_METHOD` varchar(10) DEFAULT NULL,
+  `IS_NEW_PAGE` varchar(10) NOT NULL,
+  `INTERPRETATION_NOTES` text,
+  `LAB_DEPARTMENT` varchar(75) DEFAULT NULL,
+  `PROFILE_SC` varchar(50) NOT NULL,
+  UNIQUE KEY `PACKAGE_ID` (`PACKAGE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_package`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_package` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_package` (`LAB_TEST_PACKAGE_NAME`,`LAB_TEST_HRS`,`LAB_TEST_DAYS`,`LAB_TEST_PKG_IS_ACTIVE`,`REMARKS`,`PACKAGE_ID`,`LAB_TEST_CODE`,`LAB_TEST_IS_TEMPLATE`,`DISPLAY_PROFILE`,`DISPLAY_GROUP`,`DISPLAY_METHOD`,`IS_NEW_PAGE`,`INTERPRETATION_NOTES`,`LAB_DEPARTMENT`,`PROFILE_SC`) VALUES 
+ ('cbc','1','1','Yes','afcasa',45,45,'Yes','Yes','Yes','Yes','Yes','asdfa','lab','cbc'),
+ ('sdsv','1','2','Yes','asda',46,46,'Yes','Yes','Yes','Yes','Yes','asdad','external lab','sd'),
+ ('blood','1',NULL,'Yes','fgbndfgdfg',47,47,'No','Yes','Yes','No','No','NA','lab','blood'),
+ ('pheripheral smear',NULL,NULL,'Yes','ergdrg',48,48,'No','Yes','No','Yes','Yes','dfsgdfg','lab','pheripheral smear'),
+ ('xdcvgxdg1','2','1','Yes','cbxb',49,49,'Yes','Yes','No','Yes','No','cxbvxb','Radiology','xdcvgxdg'),
+ ('dfhdf','1',NULL,'No',NULL,50,50,'Yes','Yes','No','Yes','Yes',NULL,'lab','dfhdf');
+/*!40000 ALTER TABLE `hms_admin_lab_package` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_package_tests`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_package_tests`;
+CREATE TABLE `hms_admin_lab_package_tests` (
+  `PACKAGE_ID` int(6) NOT NULL,
+  `LAB_TEST_NAME` varchar(50) NOT NULL,
+  `LAB_TEST_QUANTITY` smallint(3) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `LAB_TEST_CODE` int(25) NOT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_LAB_TEST_PKG` (`PACKAGE_ID`),
+  CONSTRAINT `FK_LAB_TEST_PKG` FOREIGN KEY (`PACKAGE_ID`) REFERENCES `hms_admin_lab_package` (`PACKAGE_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=136 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_package_tests`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_package_tests` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_package_tests` (`PACKAGE_ID`,`LAB_TEST_NAME`,`LAB_TEST_QUANTITY`,`ID`,`LAB_TEST_CODE`) VALUES 
+ (45,'hb',1,98,45),
+ (45,'rbc count',1,99,45),
+ (45,'esinophiosis',1,100,45),
+ (45,'platellete count',1,101,45),
+ (45,'hp',1,102,45),
+ (46,'sadad',1,106,46),
+ (46,'asda',1,107,46),
+ (46,'ads',1,108,46),
+ (46,'asdad',1,109,46),
+ (47,'blood1',1,110,47),
+ (47,'blood2',1,111,47),
+ (47,'blood3',1,112,47),
+ (47,'blood1',1,113,47),
+ (47,'blood2',1,114,47),
+ (48,'p',1,121,48),
+ (48,'s',1,122,48),
+ (49,'zc',1,129,49),
+ (49,'zcff',1,130,49),
+ (50,'fgsdfg',1,134,50),
+ (50,'sdgsdgsgszdg',1,135,50);
+/*!40000 ALTER TABLE `hms_admin_lab_package_tests` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_report_code`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_report_code`;
+CREATE TABLE `hms_admin_lab_report_code` (
+  `REPORT_CODE` int(6) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `CITY` varchar(150) NOT NULL,
+  `SIGNATURE` varchar(50) NOT NULL,
+  UNIQUE KEY `REPORT_CODE` (`REPORT_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_report_code`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_report_code` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_report_code` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_report_style`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_report_style`;
+CREATE TABLE `hms_admin_lab_report_style` (
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `FONT_SIZE` int(6) NOT NULL,
+  `FONT_FAMILY` varchar(100) NOT NULL,
+  `TOP_POSITION` int(6) NOT NULL,
+  `REPORT_HEADING_NAME` varchar(50) NOT NULL,
+  `BOLD_TYPE` varchar(25) NOT NULL,
+  `IS_UNDERLINE` varchar(25) NOT NULL,
+  `LETTER_CASE` varchar(25) DEFAULT NULL,
+  `TEXT_ALIGN` varchar(100) NOT NULL,
+  `PIXELS_LINE` float(8,2) NOT NULL,
+  `PIXELS_TEXT_LINE` float(8,2) NOT NULL,
+  `LEFT_MARGIN` float DEFAULT NULL,
+  `LEFT_SIGN` varchar(100) DEFAULT NULL,
+  `RIGHT_SIGN` varchar(100) DEFAULT NULL,
+  `SIGN_DISPLAY` varchar(20) DEFAULT NULL,
+  `SIGN_SELECTION` varchar(20) DEFAULT NULL,
+  `ROW_HEIGHT` float(8,2) DEFAULT '0.00',
+  `TEXT_POSITION` varchar(20) DEFAULT NULL,
+  `DMG_RTMGN` float(6,2) DEFAULT '70.00',
+  `SIGN_RT_POS` float(6,2) DEFAULT '50.00',
+  `LEFT_SIGN_DISPLAY` varchar(12) DEFAULT 'LSYSPRINT',
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_report_style`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_report_style` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_report_style` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_stock_category`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_stock_category`;
+CREATE TABLE `hms_admin_lab_stock_category` (
+  `ITEM_CATEGORY_NAME` varchar(50) NOT NULL,
+  `ITEM_CATEGORY_DESC` varchar(150) DEFAULT NULL,
+  `ITEM_CATEGORY_STATUS` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ITEM_CATEGORY_NAME`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_stock_category`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_stock_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_stock_category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_stock_database`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_stock_database`;
+CREATE TABLE `hms_admin_lab_stock_database` (
+  `ITEM_NAME` varchar(150) NOT NULL,
+  `ITEM_CATEGORY_NAME` varchar(20) NOT NULL,
+  `ITEM_PKG` varchar(20) NOT NULL,
+  `ITEM_MFR` varchar(40) NOT NULL,
+  `ITEM_APPLY_METHOD` varchar(40) DEFAULT NULL,
+  `ITEM_UNIT_NAME` varchar(50) DEFAULT NULL,
+  `ITEM_CONVERSION_FACTOR` smallint(6) DEFAULT NULL,
+  `ITEM_CODE` varchar(20) DEFAULT NULL,
+  `REORDERQTY` int(20) DEFAULT NULL,
+  `ITEM_STATUS` varchar(20) DEFAULT NULL,
+  `ID` int(20) NOT NULL AUTO_INCREMENT,
+  `RACK_NAME` varchar(20) DEFAULT NULL,
+  `MINQTY` int(20) DEFAULT NULL,
+  `MAXQTY` int(20) DEFAULT NULL,
+  `ORDERQTY` int(20) DEFAULT NULL,
+  `VAT_TAX` float(8,2) DEFAULT NULL,
+  `NON_STOCK_ITEM` varchar(6) DEFAULT NULL,
+  PRIMARY KEY (`ITEM_NAME`,`ITEM_PKG`,`ITEM_MFR`),
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `ITEM_CODE` (`ITEM_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_stock_database`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_stock_database` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_stock_database` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_stock_item_unit`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_stock_item_unit`;
+CREATE TABLE `hms_admin_lab_stock_item_unit` (
+  `ITEM_UNIT_NAME` varchar(50) NOT NULL,
+  `ITEM_UNIT_DESC` varchar(150) DEFAULT NULL,
+  `ITEM_UNIT_STATUS` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ITEM_UNIT_NAME`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_stock_item_unit`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_stock_item_unit` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_stock_item_unit` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_stock_mnfrs`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_stock_mnfrs`;
+CREATE TABLE `hms_admin_lab_stock_mnfrs` (
+  `MNF_NAME` varchar(150) NOT NULL,
+  `MNF_SHORT` varchar(50) DEFAULT NULL,
+  `MNF_SORDER` int(6) DEFAULT NULL,
+  `MNF_ADDR1` varchar(150) DEFAULT NULL,
+  `MNF_ADDR2` varchar(150) DEFAULT NULL,
+  `MNF_ADDR3` varchar(150) DEFAULT NULL,
+  `MNF_ADDR4` varchar(150) DEFAULT NULL,
+  `MNF_PHNO` varchar(20) DEFAULT NULL,
+  `MNF_PHNO2` varchar(20) DEFAULT NULL,
+  `MNF_STATUS` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `MNF_CODE` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`MNF_NAME`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_stock_mnfrs`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_stock_mnfrs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_stock_mnfrs` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_supplier_categories`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_supplier_categories`;
+CREATE TABLE `hms_admin_lab_supplier_categories` (
+  `ID` int(6) NOT NULL,
+  `ITEM_CATEGORY` varchar(150) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_supplier_categories`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_supplier_categories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_supplier_categories` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_supplier_contacts`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_supplier_contacts`;
+CREATE TABLE `hms_admin_lab_supplier_contacts` (
+  `ID` int(6) NOT NULL,
+  `CONTACT_PERSON_NAME` varchar(50) DEFAULT NULL,
+  `PHONE_NUMBER` varchar(13) DEFAULT NULL,
+  `MOBILE_NUMBER` varchar(13) DEFAULT NULL,
+  `E_MAIL` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_supplier_contacts`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_supplier_contacts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_supplier_contacts` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_suppliers_dtls`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_suppliers_dtls`;
+CREATE TABLE `hms_admin_lab_suppliers_dtls` (
+  `SUPPLIER_NAME` varchar(75) NOT NULL,
+  `ADDRESS_LINE1` varchar(150) DEFAULT NULL,
+  `ADDRESS_LINE2` varchar(150) DEFAULT NULL,
+  `CITY` varchar(25) NOT NULL,
+  `STATE` varchar(25) DEFAULT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(13) DEFAULT NULL,
+  `PHONE_NUMBER2` varchar(13) DEFAULT NULL,
+  `MOBILE_NUMBER1` varchar(13) DEFAULT NULL,
+  `FAX_NUMBER` varchar(13) DEFAULT NULL,
+  `E_MAIL` varchar(50) DEFAULT NULL,
+  `DL_NO` varchar(50) DEFAULT NULL,
+  `CST` varchar(50) DEFAULT NULL,
+  `VAT` varchar(50) DEFAULT NULL,
+  `TIN` varchar(50) DEFAULT NULL,
+  `STATUS` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL,
+  PRIMARY KEY (`SUPPLIER_NAME`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_suppliers_dtls`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_suppliers_dtls` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_suppliers_dtls` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test`;
+CREATE TABLE `hms_admin_lab_test` (
+  `LAB_TEST_CODE` int(25) NOT NULL,
+  `LAB_TEST_NAME` varchar(50) NOT NULL,
+  `LAB_TEST_GROUP_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(30) DEFAULT NULL,
+  `LAB_TEST_HRS` varchar(10) DEFAULT NULL,
+  `LAB_TEST_DAYS` varchar(10) DEFAULT NULL,
+  `LAB_TEST_TIMING` varchar(25) DEFAULT NULL,
+  `LAB_TEST_IS_ACTIVE` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) NOT NULL,
+  `LAB_TEST_METHOD` varchar(100) DEFAULT NULL,
+  `LAB_TEST_IS_CULTURE` varchar(10) NOT NULL,
+  `DISPLAY_TEST` varchar(10) DEFAULT NULL,
+  `REPORTTEST_ID` int(10) DEFAULT NULL,
+  `IS_NEW_PAGE` varchar(10) NOT NULL,
+  `LAB_TEST_IS_WIDAL` varchar(10) NOT NULL,
+  `INTERPRETATION_NOTES` text,
+  `LAB_DEPARTMENT` varchar(75) DEFAULT NULL,
+  `TEST_SC` varchar(50) NOT NULL,
+  `SEND_SMS` varchar(10) NOT NULL,
+  PRIMARY KEY (`LAB_TEST_CODE`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_test` (`LAB_TEST_CODE`,`LAB_TEST_NAME`,`LAB_TEST_GROUP_NAME`,`LAB_TEST_TYPE`,`LAB_TEST_HRS`,`LAB_TEST_DAYS`,`LAB_TEST_TIMING`,`LAB_TEST_IS_ACTIVE`,`ID`,`LAB_TEST_IS_TEMPLATE`,`LAB_TEST_METHOD`,`LAB_TEST_IS_CULTURE`,`DISPLAY_TEST`,`REPORTTEST_ID`,`IS_NEW_PAGE`,`LAB_TEST_IS_WIDAL`,`INTERPRETATION_NOTES`,`LAB_DEPARTMENT`,`TEST_SC`,`SEND_SMS`) VALUES 
+ (11,'CBC','1','1',NULL,NULL,NULL,'true',2,'No',NULL,'No',NULL,NULL,'true','No',NULL,'1','wq','false'),
+ (22,'HBC','1','1',NULL,NULL,NULL,'true',3,'No',NULL,'No',NULL,NULL,'true','No',NULL,'2','dd','true'),
+ (33,'rwe',NULL,NULL,NULL,NULL,NULL,'false',1,'No',NULL,'No',NULL,NULL,'false','No',NULL,NULL,'rew','false'),
+ (44,'Bilirubin','1','1',NULL,NULL,NULL,'true',34,'No',NULL,'No',NULL,NULL,'true','No',NULL,'1','dd','true'),
+ (3232,'A/G Ratio','1','1',NULL,NULL,NULL,'true',45,'No',NULL,'No',NULL,NULL,'true','No',NULL,'1','ss','true'),
+ (5345,'X-Ray','1','1',NULL,NULL,NULL,'true',3233,'No',NULL,'No',NULL,NULL,'true','No',NULL,'2','ww','true');
+/*!40000 ALTER TABLE `hms_admin_lab_test` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_group`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_group`;
+CREATE TABLE `hms_admin_lab_test_group` (
+  `LAB_TEST_GROUP_NAME` varchar(50) NOT NULL,
+  `LAB_TEST_GROUP_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  `REPORT_ID` int(10) DEFAULT NULL,
+  `DISPLAY_GROUP` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_group`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_group` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_test_group` (`LAB_TEST_GROUP_NAME`,`LAB_TEST_GROUP_DESC`,`ID`,`STATUS`,`REPORT_ID`,`DISPLAY_GROUP`) VALUES 
+ ('Haematology','Haematology',1,'Active',1,'Yes');
+/*!40000 ALTER TABLE `hms_admin_lab_test_group` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_medicines`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_medicines`;
+CREATE TABLE `hms_admin_lab_test_medicines` (
+  `GROUPNAME_PROFILE` varchar(50) NOT NULL,
+  `TESTNAME_PROFILE` varchar(50) NOT NULL,
+  `TESTCODE_PROFILE` int(6) NOT NULL,
+  `METHODNAME` varchar(50) DEFAULT NULL,
+  `ITAMNAME` varchar(50) DEFAULT NULL,
+  `ITEMCODE` int(6) DEFAULT NULL,
+  `CONSUMPTION_QTY` int(6) DEFAULT NULL,
+  `ITEM_MFR` varchar(40) DEFAULT NULL,
+  `ITEM_PKG` varchar(20) DEFAULT NULL,
+  `UNIT` varchar(20) DEFAULT NULL,
+  `QTY` varchar(20) DEFAULT NULL,
+  `SLNO` varchar(20) DEFAULT NULL,
+  `COMBOTESTNAME` varchar(200) DEFAULT NULL,
+  `ID` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_medicines`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_medicines` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_test_medicines` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_param`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_param`;
+CREATE TABLE `hms_admin_lab_test_param` (
+  `LAB_TEST_CODE` int(25) NOT NULL,
+  `LAB_TEST_NAME` varchar(100) NOT NULL,
+  `LAB_TEST_PARAMETER` varchar(100) NOT NULL,
+  `LAB_TEST_RESULT_METRIC` varchar(50) DEFAULT NULL,
+  `LAB_TEST_LLIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_ULIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_SPECIMEN` varchar(100) DEFAULT NULL,
+  `LAB_TEST_METHOD` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `LAB_TEST_FEMALE_LLIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_FEMALE_ULIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_NEONATAL_LLIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_NEONATAL_ULIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_CHILD_LLIMIT` varchar(250) DEFAULT NULL,
+  `LAB_TEST_CHLID_ULIMIT` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `FK_LAB_TEST_CODE` (`LAB_TEST_CODE`),
+  CONSTRAINT `FK_LAB_TEST_CODE` FOREIGN KEY (`LAB_TEST_CODE`) REFERENCES `hms_admin_lab_test` (`LAB_TEST_CODE`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_param`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_param` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_test_param` (`LAB_TEST_CODE`,`LAB_TEST_NAME`,`LAB_TEST_PARAMETER`,`LAB_TEST_RESULT_METRIC`,`LAB_TEST_LLIMIT`,`LAB_TEST_ULIMIT`,`LAB_TEST_SPECIMEN`,`LAB_TEST_METHOD`,`ID`,`LAB_TEST_FEMALE_LLIMIT`,`LAB_TEST_FEMALE_ULIMIT`,`LAB_TEST_NEONATAL_LLIMIT`,`LAB_TEST_NEONATAL_ULIMIT`,`LAB_TEST_CHILD_LLIMIT`,`LAB_TEST_CHLID_ULIMIT`) VALUES 
+ (33,'rwe','ter',NULL,NULL,NULL,'tert',NULL,1,NULL,NULL,NULL,NULL,NULL,NULL),
+ (11,'CBC','gg',NULL,NULL,NULL,'ww',NULL,8,NULL,NULL,NULL,NULL,NULL,NULL),
+ (22,'HBC','ee',NULL,NULL,NULL,'dd',NULL,9,NULL,NULL,NULL,NULL,NULL,NULL),
+ (44,'Bilirubin','fsd',NULL,NULL,NULL,'fsd',NULL,10,NULL,NULL,NULL,NULL,NULL,NULL),
+ (3232,'A/G Ratio','ew',NULL,NULL,NULL,'ewew',NULL,11,NULL,NULL,NULL,NULL,NULL,NULL),
+ (5345,'X-Ray','ds',NULL,NULL,NULL,'dw',NULL,12,NULL,NULL,NULL,NULL,NULL,NULL);
+/*!40000 ALTER TABLE `hms_admin_lab_test_param` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_param_age_ranges`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_param_age_ranges`;
+CREATE TABLE `hms_admin_lab_test_param_age_ranges` (
+  `GENDER` varchar(20) NOT NULL,
+  `AGE` int(6) NOT NULL,
+  `LOWER_RANGE` varchar(50) NOT NULL,
+  `UPPER_RANGE` varchar(50) NOT NULL,
+  `LAB_TEST_CODE` int(6) NOT NULL,
+  `LAB_TEST_PARAM_CODE` int(6) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_param_age_ranges`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_param_age_ranges` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_test_param_age_ranges` (`GENDER`,`AGE`,`LOWER_RANGE`,`UPPER_RANGE`,`LAB_TEST_CODE`,`LAB_TEST_PARAM_CODE`,`ID`) VALUES 
+ ('m',3,'3','3',33,1,4);
+/*!40000 ALTER TABLE `hms_admin_lab_test_param_age_ranges` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_param_age_ranges_temp`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_param_age_ranges_temp`;
+CREATE TABLE `hms_admin_lab_test_param_age_ranges_temp` (
+  `GENDER` varchar(20) NOT NULL,
+  `AGE` int(6) NOT NULL,
+  `LOWER_RANGE` varchar(50) NOT NULL,
+  `UPPER_RANGE` varchar(50) NOT NULL,
+  `LAB_TEST_CODE` int(6) NOT NULL,
+  `LAB_TEST_PARAM_CODE` int(6) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_param_age_ranges_temp`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_param_age_ranges_temp` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_test_param_age_ranges_temp` (`GENDER`,`AGE`,`LOWER_RANGE`,`UPPER_RANGE`,`LAB_TEST_CODE`,`LAB_TEST_PARAM_CODE`,`ID`) VALUES 
+ ('m',3,'3','3',33,1,1),
+ ('Male',20,'11','22',11,0,2),
+ ('Male',20,'11','22',5345,0,3);
+/*!40000 ALTER TABLE `hms_admin_lab_test_param_age_ranges_temp` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_param_heading`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_param_heading`;
+CREATE TABLE `hms_admin_lab_test_param_heading` (
+  `LAB_TEST_PARAM_HEADING` varchar(100) NOT NULL,
+  `LAB_TEST_PARAM_HEADING_DESC` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_param_heading`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_param_heading` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_test_param_heading` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_timings`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_timings`;
+CREATE TABLE `hms_admin_lab_test_timings` (
+  `LAB_TEST_TIMING` varchar(25) NOT NULL,
+  `LAB_TEST_TIMING_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `LAB_TEST_TIMING` (`LAB_TEST_TIMING`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_timings`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_timings` DISABLE KEYS */;
+INSERT INTO `hms_admin_lab_test_timings` (`LAB_TEST_TIMING`,`LAB_TEST_TIMING_DESC`,`ID`,`STATUS`) VALUES 
+ ('Fasting','Morning Time',1,'Active');
+/*!40000 ALTER TABLE `hms_admin_lab_test_timings` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_test_type`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_test_type`;
+CREATE TABLE `hms_admin_lab_test_type` (
+  `LAB_TEST_TYPE` varchar(25) NOT NULL,
+  `LAB_TEST_TYPE_DESC` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE_STATUS` varchar(25) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_test_type`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_test_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_test_type` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_lab_vat_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_lab_vat_details`;
+CREATE TABLE `hms_admin_lab_vat_details` (
+  `ID` int(6) NOT NULL,
+  `SLAB_VALUE1` float(8,2) NOT NULL,
+  `SLAB_VALUE2` float(8,2) NOT NULL,
+  `SLAB_VALUE3` float(8,2) NOT NULL,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_lab_vat_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_lab_vat_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_lab_vat_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_labels`
+--
+
+DROP TABLE IF EXISTS `hms_admin_labels`;
+CREATE TABLE `hms_admin_labels` (
+  `LABEL_NAME` varchar(100) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_labels`
+--
+
+/*!40000 ALTER TABLE `hms_admin_labels` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_labels` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_labels_order`
+--
+
+DROP TABLE IF EXISTS `hms_admin_labels_order`;
+CREATE TABLE `hms_admin_labels_order` (
+  `ID` int(6) NOT NULL,
+  `INDEX_ID` int(6) NOT NULL,
+  `LABEL_NAME` varchar(100) DEFAULT NULL,
+  `LABEL_DESC` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_labels_order`
+--
+
+/*!40000 ALTER TABLE `hms_admin_labels_order` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_labels_order` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_laboratory_template`
+--
+
+DROP TABLE IF EXISTS `hms_admin_laboratory_template`;
+CREATE TABLE `hms_admin_laboratory_template` (
+  `TEMPLATE_NAME` varchar(50) NOT NULL,
+  `TEMPLATE_DESC` text NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `FONT_TYPE` varchar(40) NOT NULL,
+  `FONT_SIZE` int(6) NOT NULL,
+  `FONT_COLOR` varchar(40) NOT NULL,
+  `GROUP_NAME` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_laboratory_template`
+--
+
+/*!40000 ALTER TABLE `hms_admin_laboratory_template` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_laboratory_template` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_laboratory_template_temp`
+--
+
+DROP TABLE IF EXISTS `hms_admin_laboratory_template_temp`;
+CREATE TABLE `hms_admin_laboratory_template_temp` (
+  `label_name` varchar(50) DEFAULT NULL,
+  `label_desc` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_laboratory_template_temp`
+--
+
+/*!40000 ALTER TABLE `hms_admin_laboratory_template_temp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_laboratory_template_temp` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_labs`
+--
+
+DROP TABLE IF EXISTS `hms_admin_labs`;
+CREATE TABLE `hms_admin_labs` (
+  `REPORT_CODE` int(6) NOT NULL,
+  `LAB_NAME` varchar(150) NOT NULL,
+  `CITY` varchar(150) NOT NULL,
+  `SIGNATURE` varchar(50) NOT NULL,
+  `REPORT_SIGN` varchar(100) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `IS_ACTIVE` varchar(15) NOT NULL,
+  `FONT_TOP` int(6) NOT NULL,
+  `STATE` varchar(150) NOT NULL,
+  UNIQUE KEY `REPORT_CODE` (`REPORT_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_labs`
+--
+
+/*!40000 ALTER TABLE `hms_admin_labs` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_labs` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_labsms_feature_table`
+--
+
+DROP TABLE IF EXISTS `hms_admin_labsms_feature_table`;
+CREATE TABLE `hms_admin_labsms_feature_table` (
+  `LAB_SMS_NAME` varchar(50) NOT NULL,
+  `FEATURE_CODE` int(6) NOT NULL,
+  `IS_ACTIVE` varchar(15) NOT NULL,
+  `FEATURE_DESCRIPTION` varchar(100) DEFAULT NULL,
+  UNIQUE KEY `FEATURE_CODE` (`FEATURE_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_labsms_feature_table`
+--
+
+/*!40000 ALTER TABLE `hms_admin_labsms_feature_table` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_labsms_feature_table` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_medicine`
+--
+
+DROP TABLE IF EXISTS `hms_admin_medicine`;
+CREATE TABLE `hms_admin_medicine` (
+  `MEDICINE_NAME` varchar(100) DEFAULT NULL,
+  `MEDICINE_DESC` varchar(100) DEFAULT NULL,
+  `MEDICINE_CODE` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `INTERMEDIATE_UPPER` int(10) DEFAULT '0',
+  `INTERMEDIATE_LOWER` int(10) DEFAULT '0',
+  `RESISTANT_UPPER` int(10) DEFAULT '0',
+  `RESISTANT_LOWER` int(10) DEFAULT '0',
+  `SENSITIVITY_UPPER` int(10) DEFAULT '0',
+  `SENSITIVITY_LOWER` int(10) DEFAULT '0',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_medicine`
+--
+
+/*!40000 ALTER TABLE `hms_admin_medicine` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_medicine` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_method`
+--
+
+DROP TABLE IF EXISTS `hms_admin_method`;
+CREATE TABLE `hms_admin_method` (
+  `METHOD_NAME` varchar(100) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_method`
+--
+
+/*!40000 ALTER TABLE `hms_admin_method` DISABLE KEYS */;
+INSERT INTO `hms_admin_method` (`METHOD_NAME`,`DESCRIPTION`,`ID`,`STATUS`) VALUES 
+ ('dsfsdf','sdfdsf',1,'Active'),
+ ('dsfsdfdsfdsf',NULL,2,'Active'),
+ ('dsfsdfsdf',NULL,3,'Active'),
+ ('asdf',NULL,4,'Active');
+/*!40000 ALTER TABLE `hms_admin_method` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_mobile_no_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_mobile_no_details`;
+CREATE TABLE `hms_admin_mobile_no_details` (
+  `NAME` varchar(100) NOT NULL,
+  `MOBILE_NO` varchar(25) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_mobile_no_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_mobile_no_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_mobile_no_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_module`
+--
+
+DROP TABLE IF EXISTS `hms_admin_module`;
+CREATE TABLE `hms_admin_module` (
+  `MODULE_NAME` varchar(50) DEFAULT NULL,
+  `MODULE_DESC` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_module`
+--
+
+/*!40000 ALTER TABLE `hms_admin_module` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_module` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_patient_from`
+--
+
+DROP TABLE IF EXISTS `hms_admin_patient_from`;
+CREATE TABLE `hms_admin_patient_from` (
+  `PATIENT_FROM` varchar(50) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`PATIENT_FROM`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_patient_from`
+--
+
+/*!40000 ALTER TABLE `hms_admin_patient_from` DISABLE KEYS */;
+INSERT INTO `hms_admin_patient_from` (`PATIENT_FROM`,`DESCRIPTION`) VALUES 
+ ('Arogya sri ',''),
+ ('Free',''),
+ ('i-Lab',NULL),
+ ('Lab to Lab',''),
+ ('LabPlatForm',NULL),
+ ('Self','');
+/*!40000 ALTER TABLE `hms_admin_patient_from` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_pharm_acct_opng_bal`
+--
+
+DROP TABLE IF EXISTS `hms_admin_pharm_acct_opng_bal`;
+CREATE TABLE `hms_admin_pharm_acct_opng_bal` (
+  `ENTRY_DATE` date NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `AMOUNT` float(12,2) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_pharm_acct_opng_bal`
+--
+
+/*!40000 ALTER TABLE `hms_admin_pharm_acct_opng_bal` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_pharm_acct_opng_bal` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_pharmacy_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_pharmacy_details`;
+CREATE TABLE `hms_admin_pharmacy_details` (
+  `PHARMACY_NAME` varchar(150) NOT NULL,
+  `VAT` varchar(20) DEFAULT NULL,
+  `DL_NO` varchar(20) DEFAULT NULL,
+  `CST` varchar(20) DEFAULT NULL,
+  `TIN_NO` varchar(20) DEFAULT NULL,
+  `ADDRESS1` varchar(150) NOT NULL,
+  `ADDRESS2` varchar(150) DEFAULT NULL,
+  `CITY` varchar(15) NOT NULL,
+  `PINCODE` varchar(6) DEFAULT NULL,
+  `PHONE_NUMBER1` varchar(13) NOT NULL,
+  `PHONE_NUMBER2` varchar(13) DEFAULT NULL,
+  `FAX_NUMBER` varchar(11) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_pharmacy_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_pharmacy_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_pharmacy_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_product_validity`
+--
+
+DROP TABLE IF EXISTS `hms_admin_product_validity`;
+CREATE TABLE `hms_admin_product_validity` (
+  `DUE_DATE` date DEFAULT NULL,
+  `IS_VALIDATE` varchar(10) NOT NULL,
+  `NO_OF_DAYS` int(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_product_validity`
+--
+
+/*!40000 ALTER TABLE `hms_admin_product_validity` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_product_validity` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_project`
+--
+
+DROP TABLE IF EXISTS `hms_admin_project`;
+CREATE TABLE `hms_admin_project` (
+  `PROJECT_NAME` varchar(50) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `CLIENT_CODE` int(6) NOT NULL,
+  UNIQUE KEY `CLIENT_CODE` (`CLIENT_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_project`
+--
+
+/*!40000 ALTER TABLE `hms_admin_project` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_project` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_radiology_template`
+--
+
+DROP TABLE IF EXISTS `hms_admin_radiology_template`;
+CREATE TABLE `hms_admin_radiology_template` (
+  `TEMPLATE_NAME` varchar(50) NOT NULL,
+  `TEMPLATE_DESC` text NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `FONT_TYPE` varchar(40) NOT NULL,
+  `FONT_SIZE` int(6) NOT NULL,
+  `FONT_COLOR` varchar(40) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_radiology_template`
+--
+
+/*!40000 ALTER TABLE `hms_admin_radiology_template` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_radiology_template` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_role`
+--
+
+DROP TABLE IF EXISTS `hms_admin_role`;
+CREATE TABLE `hms_admin_role` (
+  `ROLE_NAME` varchar(25) NOT NULL,
+  `ROLE_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ROLE_NAME` (`ROLE_NAME`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_role`
+--
+
+/*!40000 ALTER TABLE `hms_admin_role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_role` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_role_for_screen`
+--
+
+DROP TABLE IF EXISTS `hms_admin_role_for_screen`;
+CREATE TABLE `hms_admin_role_for_screen` (
+  `ROLE_ID` int(10) NOT NULL,
+  `ROLE_NAME` varchar(100) NOT NULL,
+  `ROLE_STATUS` varchar(10) NOT NULL,
+  `SCREEN_ID` int(10) NOT NULL,
+  `SCREEN_NAME` varchar(200) NOT NULL,
+  `DESCRIPTION` varchar(500) DEFAULT NULL,
+  `ADD_STATUS` varchar(10) NOT NULL,
+  `MODIFY_STATUS` varchar(10) NOT NULL,
+  `VIEW_STATUS` varchar(10) NOT NULL,
+  `DELETE_STATUS` varchar(10) NOT NULL,
+  `SCREEN_STATUS` varchar(5) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_role_for_screen`
+--
+
+/*!40000 ALTER TABLE `hms_admin_role_for_screen` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_role_for_screen` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_role_module`
+--
+
+DROP TABLE IF EXISTS `hms_admin_role_module`;
+CREATE TABLE `hms_admin_role_module` (
+  `ID` int(6) NOT NULL,
+  `MODULE_NAME` varchar(100) DEFAULT NULL,
+  KEY `FK_ID` (`ID`),
+  CONSTRAINT `FK_ID` FOREIGN KEY (`ID`) REFERENCES `hms_admin_role` (`ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_role_module`
+--
+
+/*!40000 ALTER TABLE `hms_admin_role_module` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_role_module` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_sample_collector_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_sample_collector_details`;
+CREATE TABLE `hms_admin_sample_collector_details` (
+  `COLLECTOR` varchar(150) NOT NULL,
+  `PHONE_NUMBER` varchar(13) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_sample_collector_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_sample_collector_details` DISABLE KEYS */;
+INSERT INTO `hms_admin_sample_collector_details` (`COLLECTOR`,`PHONE_NUMBER`,`ID`) VALUES 
+ ('rr','853453534',1),
+ ('rr','853453534',2),
+ ('rr','853453534',3),
+ ('rr','853453534',4),
+ ('rr','853453534',5),
+ ('rr','853453534',6),
+ ('rr','853453534',7),
+ ('rr','853453534',8),
+ ('rr','853453534',9),
+ ('rr','853453534',10),
+ ('rr','853453534',11);
+/*!40000 ALTER TABLE `hms_admin_sample_collector_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_sample_type`
+--
+
+DROP TABLE IF EXISTS `hms_admin_sample_type`;
+CREATE TABLE `hms_admin_sample_type` (
+  `SAMPLE_TYPE` varchar(50) NOT NULL,
+  `SAMPLE_TYPE_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_sample_type`
+--
+
+/*!40000 ALTER TABLE `hms_admin_sample_type` DISABLE KEYS */;
+INSERT INTO `hms_admin_sample_type` (`SAMPLE_TYPE`,`SAMPLE_TYPE_DESC`,`ID`,`STATUS`) VALUES 
+ ('Blood',NULL,1,'Active');
+/*!40000 ALTER TABLE `hms_admin_sample_type` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_screens`
+--
+
+DROP TABLE IF EXISTS `hms_admin_screens`;
+CREATE TABLE `hms_admin_screens` (
+  `ID` int(10) NOT NULL AUTO_INCREMENT,
+  `SCREEN_NAME` varchar(200) NOT NULL,
+  `DESCRIPTION` varchar(500) DEFAULT NULL,
+  `ADD_STATUS` varchar(5) NOT NULL,
+  `MODIFY_STATUS` varchar(5) NOT NULL,
+  `VIEW_STATUS` varchar(5) NOT NULL,
+  `DELETE_STATUS` varchar(5) NOT NULL,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_screens`
+--
+
+/*!40000 ALTER TABLE `hms_admin_screens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_screens` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_service_charge`
+--
+
+DROP TABLE IF EXISTS `hms_admin_service_charge`;
+CREATE TABLE `hms_admin_service_charge` (
+  `SERVICE_NAME` varchar(25) NOT NULL,
+  `SERVICE_DESC` varchar(50) DEFAULT NULL,
+  `SERVICE_COST` float(8,2) NOT NULL,
+  `SERVICE_EXPIRY` varchar(1) DEFAULT NULL,
+  `SERVICE_NO_OF_DAYS` smallint(3) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_service_charge`
+--
+
+/*!40000 ALTER TABLE `hms_admin_service_charge` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_service_charge` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_services`
+--
+
+DROP TABLE IF EXISTS `hms_admin_services`;
+CREATE TABLE `hms_admin_services` (
+  `SERVICECODE` int(6) NOT NULL,
+  `SERVICENAME` varchar(50) NOT NULL,
+  `EMP_ID` int(10) DEFAULT NULL,
+  `CATEGORY_ID` int(6) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `STATUS` varchar(10) NOT NULL DEFAULT 'Yes',
+  `VACCINE_NAME` varchar(500) DEFAULT NULL,
+  `SERVICE_PRIORITY` int(10) DEFAULT NULL,
+  `ID` int(6) NOT NULL,
+  PRIMARY KEY (`SERVICECODE`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `FK_CATEGORY` (`CATEGORY_ID`),
+  KEY `SERVICENAME` (`SERVICENAME`),
+  CONSTRAINT `FK_CATEGORY` FOREIGN KEY (`CATEGORY_ID`) REFERENCES `hms_admin_services_category` (`CATEGORY_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_services`
+--
+
+/*!40000 ALTER TABLE `hms_admin_services` DISABLE KEYS */;
+INSERT INTO `hms_admin_services` (`SERVICECODE`,`SERVICENAME`,`EMP_ID`,`CATEGORY_ID`,`DESCRIPTION`,`STATUS`,`VACCINE_NAME`,`SERVICE_PRIORITY`,`ID`) VALUES 
+ (22,'HBC',0,5,NULL,'Yes',NULL,NULL,12),
+ (44,'Bilirubin',0,5,NULL,'Yes',NULL,NULL,23),
+ (45,'cbc',0,5,NULL,'Yes',NULL,NULL,45),
+ (46,'sdsv',0,5,NULL,'Yes',NULL,NULL,46),
+ (47,'blood',0,5,NULL,'Yes',NULL,NULL,47),
+ (48,'pheripheral smear',0,5,NULL,'Yes',NULL,NULL,48),
+ (49,'xdcvgxdg1',0,5,NULL,'Yes',NULL,NULL,49),
+ (50,'dfhdf',0,5,NULL,'No',NULL,NULL,50),
+ (3232,'A/G Ratio',0,5,NULL,'Yes',NULL,NULL,51),
+ (5345,'X-Ray',0,5,NULL,'Yes',NULL,NULL,3233);
+/*!40000 ALTER TABLE `hms_admin_services` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_services_category`
+--
+
+DROP TABLE IF EXISTS `hms_admin_services_category`;
+CREATE TABLE `hms_admin_services_category` (
+  `CATEGORY` varchar(50) NOT NULL,
+  `CATEGORY_TYPE` varchar(50) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `CATEGORY_ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  `SERVICETYPE` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`CATEGORY_ID`),
+  UNIQUE KEY `CATEGORY_ID` (`CATEGORY_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_services_category`
+--
+
+/*!40000 ALTER TABLE `hms_admin_services_category` DISABLE KEYS */;
+INSERT INTO `hms_admin_services_category` (`CATEGORY`,`CATEGORY_TYPE`,`DESCRIPTION`,`CATEGORY_ID`,`STATUS`,`SERVICETYPE`) VALUES 
+ ('Radiology Services','Investigations',NULL,2,'Active','D'),
+ ('Laboratory Services','Investigations',NULL,5,'Active','D');
+/*!40000 ALTER TABLE `hms_admin_services_category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_services_category_type`
+--
+
+DROP TABLE IF EXISTS `hms_admin_services_category_type`;
+CREATE TABLE `hms_admin_services_category_type` (
+  `CATEGORY_TYPE` varchar(50) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_services_category_type`
+--
+
+/*!40000 ALTER TABLE `hms_admin_services_category_type` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_services_category_type` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_sub_diagnosis`
+--
+
+DROP TABLE IF EXISTS `hms_admin_sub_diagnosis`;
+CREATE TABLE `hms_admin_sub_diagnosis` (
+  `SUB_DIAGNOSIS_CODE_PREFIX` varchar(3) NOT NULL,
+  `SUB_DIAGNOSIS_CODE` varchar(50) NOT NULL,
+  `DIAGNOSIS_CODE` varchar(50) NOT NULL,
+  `SUB_DIAGNOSIS_NAME` varchar(50) NOT NULL,
+  `SUB_DIAGNOSIS_DESC` varchar(50) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `SUB_DIAGNOSIS_STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`SUB_DIAGNOSIS_CODE_PREFIX`,`DIAGNOSIS_CODE`),
+  UNIQUE KEY `ID` (`ID`),
+  KEY `FK_DIAG_CODE` (`DIAGNOSIS_CODE`),
+  CONSTRAINT `FK_DIAG_CODE` FOREIGN KEY (`DIAGNOSIS_CODE`) REFERENCES `hms_admin_diagnosis` (`DIAGNOSIS_CODE`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_sub_diagnosis`
+--
+
+/*!40000 ALTER TABLE `hms_admin_sub_diagnosis` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_sub_diagnosis` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_subgroup`
+--
+
+DROP TABLE IF EXISTS `hms_admin_subgroup`;
+CREATE TABLE `hms_admin_subgroup` (
+  `SUBGROUP_NAME` varchar(100) NOT NULL,
+  `DESCRIPTION` varchar(100) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `STATUS` varchar(10) NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_subgroup`
+--
+
+/*!40000 ALTER TABLE `hms_admin_subgroup` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_subgroup` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_supplier_categories`
+--
+
+DROP TABLE IF EXISTS `hms_admin_supplier_categories`;
+CREATE TABLE `hms_admin_supplier_categories` (
+  `ID` int(6) NOT NULL,
+  `ITEM_CATEGORY` varchar(150) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_supplier_categories`
+--
+
+/*!40000 ALTER TABLE `hms_admin_supplier_categories` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_supplier_categories` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_supplier_contacts`
+--
+
+DROP TABLE IF EXISTS `hms_admin_supplier_contacts`;
+CREATE TABLE `hms_admin_supplier_contacts` (
+  `ID` int(6) NOT NULL,
+  `CONTACT_PERSON_NAME` varchar(50) DEFAULT NULL,
+  `PHONE_NUMBER` varchar(13) DEFAULT NULL,
+  `MOBILE_NUMBER` varchar(13) DEFAULT NULL,
+  `E_MAIL` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_supplier_contacts`
+--
+
+/*!40000 ALTER TABLE `hms_admin_supplier_contacts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_supplier_contacts` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_upload_labreport_details`
+--
+
+DROP TABLE IF EXISTS `hms_admin_upload_labreport_details`;
+CREATE TABLE `hms_admin_upload_labreport_details` (
+  `FILENAME` varchar(30) DEFAULT NULL,
+  `USERFILENAME` varchar(30) DEFAULT NULL,
+  `COMPANYNAME` varchar(30) DEFAULT NULL,
+  `image` longblob
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_upload_labreport_details`
+--
+
+/*!40000 ALTER TABLE `hms_admin_upload_labreport_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_upload_labreport_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_ward`
+--
+
+DROP TABLE IF EXISTS `hms_admin_ward`;
+CREATE TABLE `hms_admin_ward` (
+  `WARD_TYPE` varchar(50) NOT NULL,
+  `WARD_DESC` varchar(50) DEFAULT NULL,
+  `WARD_STATUS` varchar(25) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  `ROOM_OR_WARD` varchar(50) NOT NULL,
+  PRIMARY KEY (`WARD_TYPE`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_ward`
+--
+
+/*!40000 ALTER TABLE `hms_admin_ward` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_ward` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_admin_ward_fixed_services`
+--
+
+DROP TABLE IF EXISTS `hms_admin_ward_fixed_services`;
+CREATE TABLE `hms_admin_ward_fixed_services` (
+  `SERVICE_CATEGORY` varchar(50) NOT NULL,
+  `SERVICE_NAME` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_admin_ward_fixed_services`
+--
+
+/*!40000 ALTER TABLE `hms_admin_ward_fixed_services` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_admin_ward_fixed_services` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_due_bill_summary`
+--
+
+DROP TABLE IF EXISTS `hms_due_bill_summary`;
+CREATE TABLE `hms_due_bill_summary` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PID` int(20) NOT NULL,
+  `PATIENT_FROM` varchar(50) DEFAULT NULL,
+  `TOTAL_BILL_AMOUNT` float(8,2) DEFAULT NULL,
+  `ALREADY_PAID_AMOUNT` float(8,2) DEFAULT NULL,
+  `DATE_OF_PAYMENT` date NOT NULL,
+  `TIME_OF_PAYMENT` varchar(12) NOT NULL,
+  `CASH_AMOUNT` float(8,2) DEFAULT NULL,
+  `CARD_AMOUNT` float(8,2) DEFAULT NULL,
+  `CHEQUE_AMOUNT` float(8,2) DEFAULT NULL,
+  `TOTAL_RECEIVED_AMOUNT` float(8,2) DEFAULT NULL,
+  `REFUND_AMOUNT` float(8,2) DEFAULT NULL,
+  `PAYING_AMOUNT` float(8,2) DEFAULT NULL,
+  `CASHIER` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(25) DEFAULT NULL,
+  `REMARKS` varchar(400) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_due_bill_summary`
+--
+
+/*!40000 ALTER TABLE `hms_due_bill_summary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_due_bill_summary` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_due_bill_summary_archive`
+--
+
+DROP TABLE IF EXISTS `hms_due_bill_summary_archive`;
+CREATE TABLE `hms_due_bill_summary_archive` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PID` int(20) NOT NULL,
+  `PATIENT_FROM` varchar(50) DEFAULT NULL,
+  `TOTAL_BILL_AMOUNT` float(8,2) DEFAULT NULL,
+  `ALREADY_PAID_AMOUNT` float(8,2) DEFAULT NULL,
+  `DATE_OF_PAYMENT` date NOT NULL,
+  `TIME_OF_PAYMENT` varchar(12) NOT NULL,
+  `CASH_AMOUNT` float(8,2) DEFAULT NULL,
+  `CARD_AMOUNT` float(8,2) DEFAULT NULL,
+  `CHEQUE_AMOUNT` float(8,2) DEFAULT NULL,
+  `TOTAL_RECEIVED_AMOUNT` float(8,2) DEFAULT NULL,
+  `REFUND_AMOUNT` float(8,2) DEFAULT NULL,
+  `PAYING_AMOUNT` float(8,2) DEFAULT NULL,
+  `CASHIER` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(25) DEFAULT NULL,
+  `REMARKS` varchar(400) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_due_bill_summary_archive`
+--
+
+/*!40000 ALTER TABLE `hms_due_bill_summary_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_due_bill_summary_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_hashcode_description`
+--
+
+DROP TABLE IF EXISTS `hms_hashcode_description`;
+CREATE TABLE `hms_hashcode_description` (
+  `HASH_CODE` varchar(5) NOT NULL,
+  `DESCRIPTION` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_hashcode_description`
+--
+
+/*!40000 ALTER TABLE `hms_hashcode_description` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_hashcode_description` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_admin_sms_message_settings`
+--
+
+DROP TABLE IF EXISTS `hms_lab_admin_sms_message_settings`;
+CREATE TABLE `hms_lab_admin_sms_message_settings` (
+  `SEND_SMS` tinyint(1) DEFAULT NULL,
+  `USER_NAME` varchar(50) DEFAULT NULL,
+  `PASSWORD` varchar(50) DEFAULT NULL,
+  `SMS_TEXT` text,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_admin_sms_message_settings`
+--
+
+/*!40000 ALTER TABLE `hms_lab_admin_sms_message_settings` DISABLE KEYS */;
+INSERT INTO `hms_lab_admin_sms_message_settings` (`SEND_SMS`,`USER_NAME`,`PASSWORD`,`SMS_TEXT`,`ID`) VALUES 
+ (1,'makella','finsoluser','rwerew',1),
+ (1,'makella','finsoluser','fgxdfhdfh',2),
+ (1,'makella','finsoluser','dgsdhgsgsgs',3),
+ (1,'makella','finsoluser','xvsfsgf',4),
+ (1,'makella','finsoluser','sdasdad',5),
+ (1,'makella','finsoluser','rwerew',6),
+ (1,'makella','finsoluser','rwerew',7),
+ (1,'makella','finsoluser','rwerew',8),
+ (1,'makella','finsoluser','rwerew',9),
+ (1,'makella','finsoluser','rwerew',10),
+ (1,'makella','finsoluser','rwerew',11),
+ (1,'makella','finsoluser','rwerew',12),
+ (1,'makella','finsoluser','rwerew',13),
+ (1,'makella','finsoluser','rwerew',14);
+/*!40000 ALTER TABLE `hms_lab_admin_sms_message_settings` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_culture_test_temp`
+--
+
+DROP TABLE IF EXISTS `hms_lab_culture_test_temp`;
+CREATE TABLE `hms_lab_culture_test_temp` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LAB_TEST_CATEGORY` varchar(100) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(100) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(100) DEFAULT NULL,
+  `LAB_TEST_GROUP` varchar(100) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) DEFAULT NULL,
+  `SENSITIVITY` varchar(150) DEFAULT NULL,
+  `ZONE_OF_COMBINATION` varchar(100) DEFAULT NULL,
+  `RESISTANT` varchar(150) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_culture_test_temp`
+--
+
+/*!40000 ALTER TABLE `hms_lab_culture_test_temp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_culture_test_temp` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_results_smry`
+--
+
+DROP TABLE IF EXISTS `hms_lab_results_smry`;
+CREATE TABLE `hms_lab_results_smry` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PATIENT_NAME` varchar(100) NOT NULL,
+  `TEST_COMPLETED_DATE` date NOT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) NOT NULL,
+  `REMARKS` text,
+  `PRINT_COUNT` int(20) NOT NULL,
+  `REPORT_HEADING` varchar(200) DEFAULT NULL,
+  `USER_STATUS` varchar(12) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_results_smry`
+--
+
+/*!40000 ALTER TABLE `hms_lab_results_smry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_results_smry` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_results_smry_archive`
+--
+
+DROP TABLE IF EXISTS `hms_lab_results_smry_archive`;
+CREATE TABLE `hms_lab_results_smry_archive` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PATIENT_NAME` varchar(100) NOT NULL,
+  `TEST_COMPLETED_DATE` date NOT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) NOT NULL,
+  `REMARKS` text,
+  `PRINT_COUNT` int(20) NOT NULL,
+  `REPORT_HEADING` varchar(200) DEFAULT NULL,
+  `USER_STATUS` varchar(12) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_results_smry_archive`
+--
+
+/*!40000 ALTER TABLE `hms_lab_results_smry_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_results_smry_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_template_tests`
+--
+
+DROP TABLE IF EXISTS `hms_lab_template_tests`;
+CREATE TABLE `hms_lab_template_tests` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_TEST_GROUP` varchar(50) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_template_tests`
+--
+
+/*!40000 ALTER TABLE `hms_lab_template_tests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_template_tests` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_template_tests_archive`
+--
+
+DROP TABLE IF EXISTS `hms_lab_template_tests_archive`;
+CREATE TABLE `hms_lab_template_tests_archive` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_TEST_GROUP` varchar(50) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_template_tests_archive`
+--
+
+/*!40000 ALTER TABLE `hms_lab_template_tests_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_template_tests_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_template_tests_temp`
+--
+
+DROP TABLE IF EXISTS `hms_lab_template_tests_temp`;
+CREATE TABLE `hms_lab_template_tests_temp` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_TEST_GROUP` varchar(50) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) DEFAULT NULL,
+  `TEST_RESULT` text,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `TEMPLATE_NAME` varchar(50) DEFAULT NULL,
+  `FONT_TYPE` varchar(40) NOT NULL,
+  `FONT_SIZE` varchar(40) NOT NULL,
+  `FONT_COLOR` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_template_tests_temp`
+--
+
+/*!40000 ALTER TABLE `hms_lab_template_tests_temp` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_template_tests_temp` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_test_param_results`
+--
+
+DROP TABLE IF EXISTS `hms_lab_test_param_results`;
+CREATE TABLE `hms_lab_test_param_results` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LABOLOGIST_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LABORATORY_TEST_NAME` varchar(50) DEFAULT NULL,
+  `TEST_RESULT` text,
+  `TEST_OBSERVATIONS_REMARKS` varchar(1000) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `TEMPLATE_NAME` varchar(50) DEFAULT NULL,
+  `FONT_TYPE` varchar(40) NOT NULL,
+  `FONT_SIZE` varchar(40) NOT NULL,
+  `FONT_COLOR` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_test_param_results`
+--
+
+/*!40000 ALTER TABLE `hms_lab_test_param_results` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_test_param_results` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_test_param_results_archive`
+--
+
+DROP TABLE IF EXISTS `hms_lab_test_param_results_archive`;
+CREATE TABLE `hms_lab_test_param_results_archive` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LABOLOGIST_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LABORATORY_TEST_NAME` varchar(50) DEFAULT NULL,
+  `TEST_RESULT` text,
+  `TEST_OBSERVATIONS_REMARKS` varchar(1000) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `TEMPLATE_NAME` varchar(50) DEFAULT NULL,
+  `FONT_TYPE` varchar(40) NOT NULL,
+  `FONT_SIZE` varchar(40) NOT NULL,
+  `FONT_COLOR` varchar(40) NOT NULL,
+  `ARCHIVE_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_test_param_results_archive`
+--
+
+/*!40000 ALTER TABLE `hms_lab_test_param_results_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_test_param_results_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_lab_units`
+--
+
+DROP TABLE IF EXISTS `hms_lab_units`;
+CREATE TABLE `hms_lab_units` (
+  `ITEM_IN_UNIT` varchar(25) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_lab_units`
+--
+
+/*!40000 ALTER TABLE `hms_lab_units` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_lab_units` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_master_labreport_details`
+--
+
+DROP TABLE IF EXISTS `hms_master_labreport_details`;
+CREATE TABLE `hms_master_labreport_details` (
+  `FILENAME` varchar(30) DEFAULT NULL,
+  `image` longblob,
+  `reportname` varchar(50) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_master_labreport_details`
+--
+
+/*!40000 ALTER TABLE `hms_master_labreport_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_master_labreport_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_allergy_drug_details`
+--
+
+DROP TABLE IF EXISTS `hms_op_allergy_drug_details`;
+CREATE TABLE `hms_op_allergy_drug_details` (
+  `PID` int(20) NOT NULL,
+  `ALLERGIC_MEDICINE` varchar(50) DEFAULT NULL,
+  `ALLERGIC_GENERIC_NAME` varchar(100) DEFAULT NULL,
+  `ALLERGIC_FOOD` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_allergy_drug_details`
+--
+
+/*!40000 ALTER TABLE `hms_op_allergy_drug_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_allergy_drug_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_appointment_schedule`
+--
+
+DROP TABLE IF EXISTS `hms_op_appointment_schedule`;
+CREATE TABLE `hms_op_appointment_schedule` (
+  `APPOINTMENT_NUMBER` int(20) NOT NULL,
+  `EMP_ID` int(10) NOT NULL,
+  `DOCTOR_NAME` varchar(25) NOT NULL,
+  `DOCTOR_SPECIALITY` varchar(50) DEFAULT NULL,
+  `DATE_OF_APPOINTMENT` date NOT NULL,
+  `APPOINTMENT_TIME` varchar(10) NOT NULL,
+  `APPOINTMENTTYPE` varchar(20) NOT NULL,
+  `SALUTATION` varchar(3) NOT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLENAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) NOT NULL,
+  `PATIENT_SEX` varchar(1) NOT NULL,
+  `PATIENT_DOB` date DEFAULT NULL,
+  `PATIENT_AGE` int(3) DEFAULT NULL,
+  `PATIENT_AGE_MONTHS` int(3) DEFAULT NULL,
+  `PID` int(10) DEFAULT NULL,
+  `PATIENT_PHONENUMBER_RESIDENCE` varchar(12) DEFAULT NULL,
+  `PATIENT_MOBILENUMBER` varchar(12) DEFAULT NULL,
+  `APPOINTMENT_STATUS` varchar(25) NOT NULL,
+  PRIMARY KEY (`APPOINTMENT_NUMBER`,`DATE_OF_APPOINTMENT`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_appointment_schedule`
+--
+
+/*!40000 ALTER TABLE `hms_op_appointment_schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_appointment_schedule` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_appointment_timing`
+--
+
+DROP TABLE IF EXISTS `hms_op_appointment_timing`;
+CREATE TABLE `hms_op_appointment_timing` (
+  `TIME` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_appointment_timing`
+--
+
+/*!40000 ALTER TABLE `hms_op_appointment_timing` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_appointment_timing` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_bill_card`
+--
+
+DROP TABLE IF EXISTS `hms_op_bill_card`;
+CREATE TABLE `hms_op_bill_card` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `CARD_NUMBER` bigint(25) NOT NULL,
+  `CARD_EXPIRY_DATE` varchar(15) DEFAULT NULL,
+  `CARD_TYPE` varchar(25) NOT NULL,
+  `RECPT_NUMBER` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS1` varchar(25) DEFAULT NULL,
+  `DATE_OF_BILLING` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_bill_card`
+--
+
+/*!40000 ALTER TABLE `hms_op_bill_card` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_bill_card` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_bill_card_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_bill_card_archive`;
+CREATE TABLE `hms_op_bill_card_archive` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `CARD_NUMBER` bigint(25) NOT NULL,
+  `CARD_EXPIRY_DATE` varchar(15) DEFAULT NULL,
+  `CARD_TYPE` varchar(25) NOT NULL,
+  `RECPT_NUMBER` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS1` varchar(25) DEFAULT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  `ARCHIVE_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_bill_card_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_bill_card_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_bill_card_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_bill_cheque`
+--
+
+DROP TABLE IF EXISTS `hms_op_bill_cheque`;
+CREATE TABLE `hms_op_bill_cheque` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `CHEQUE_NUMBER` int(6) NOT NULL,
+  `CHEQUE_DATE` date NOT NULL,
+  `BANK_NAME` varchar(25) NOT NULL,
+  `BANK_BRANCH` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS1` varchar(25) DEFAULT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  PRIMARY KEY (`BILL_NUMBER`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_bill_cheque`
+--
+
+/*!40000 ALTER TABLE `hms_op_bill_cheque` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_bill_cheque` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_bill_cheque_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_bill_cheque_archive`;
+CREATE TABLE `hms_op_bill_cheque_archive` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `CHEQUE_NUMBER` int(6) NOT NULL,
+  `CHEQUE_DATE` date NOT NULL,
+  `BANK_NAME` varchar(25) NOT NULL,
+  `BANK_BRANCH` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS` varchar(25) DEFAULT NULL,
+  `OTHER_DETAILS1` varchar(25) DEFAULT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  PRIMARY KEY (`BILL_NUMBER`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_bill_cheque_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_bill_cheque_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_bill_cheque_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_billed_lab_tests`
+--
+
+DROP TABLE IF EXISTS `hms_op_billed_lab_tests`;
+CREATE TABLE `hms_op_billed_lab_tests` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `SERVICECODE` int(6) NOT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `LAB_TEST_GROUP_NAME` varchar(75) DEFAULT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_billed_lab_tests`
+--
+
+/*!40000 ALTER TABLE `hms_op_billed_lab_tests` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_billed_lab_tests` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_billed_lab_tests_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_billed_lab_tests_archive`;
+CREATE TABLE `hms_op_billed_lab_tests_archive` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `SERVICECODE` int(6) NOT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `LAB_TEST_GROUP_NAME` varchar(75) DEFAULT NULL,
+  `LAB_TEST_IS_TEMPLATE` varchar(10) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_billed_lab_tests_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_billed_lab_tests_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_billed_lab_tests_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_billing_in_detail`
+--
+
+DROP TABLE IF EXISTS `hms_op_billing_in_detail`;
+CREATE TABLE `hms_op_billing_in_detail` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PID` int(20) NOT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  `TIME_OF_BILLING` varchar(12) NOT NULL,
+  `CATEGORY` varchar(150) DEFAULT NULL,
+  `SERVICE` varchar(150) DEFAULT NULL,
+  `QUANTITY` int(3) DEFAULT NULL,
+  `CHARGES` float(8,2) DEFAULT NULL,
+  `AMOUNT` float(8,2) DEFAULT NULL,
+  `DISCOUNT_AMOUNT` float(8,2) DEFAULT NULL,
+  `FINAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `LAB_ID` int(20) DEFAULT NULL,
+  `DOCTORNAME` varchar(75) DEFAULT NULL,
+  `SPECIALITY` varchar(50) DEFAULT NULL,
+  `REF_DOCTOR_EMP_ID` int(20) DEFAULT NULL,
+  `REF_DOCTORNAME` varchar(75) DEFAULT NULL,
+  `REF_DR_SPECIALITY` varchar(50) DEFAULT NULL,
+  `CASHIER` varchar(10) DEFAULT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLE_NAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SALUTATION` varchar(10) NOT NULL,
+  `PATIENT_SEX` varchar(10) NOT NULL,
+  `LAB_NAME` varchar(200) DEFAULT NULL,
+  `REFERRAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `ACTUAL_AMOUNT` float(8,2) DEFAULT '0.00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_billing_in_detail`
+--
+
+/*!40000 ALTER TABLE `hms_op_billing_in_detail` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_billing_in_detail` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_billing_in_detail_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_billing_in_detail_archive`;
+CREATE TABLE `hms_op_billing_in_detail_archive` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PID` int(20) NOT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  `TIME_OF_BILLING` varchar(12) NOT NULL,
+  `CATEGORY` varchar(150) DEFAULT NULL,
+  `SERVICE` varchar(150) DEFAULT NULL,
+  `QUANTITY` int(3) DEFAULT NULL,
+  `CHARGES` float(8,2) DEFAULT NULL,
+  `AMOUNT` float(8,2) DEFAULT NULL,
+  `DISCOUNT_AMOUNT` float(8,2) DEFAULT NULL,
+  `FINAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `LAB_ID` int(20) DEFAULT NULL,
+  `DOCTORNAME` varchar(75) DEFAULT NULL,
+  `SPECIALITY` varchar(50) DEFAULT NULL,
+  `REF_DOCTOR_EMP_ID` int(20) DEFAULT NULL,
+  `REF_DOCTORNAME` varchar(75) DEFAULT NULL,
+  `REF_DR_SPECIALITY` varchar(50) DEFAULT NULL,
+  `CASHIER` varchar(10) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLE_NAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SALUTATION` varchar(10) NOT NULL,
+  `PATIENT_SEX` varchar(10) NOT NULL,
+  `LAB_NAME` varchar(200) DEFAULT NULL,
+  `REFERRAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `ACTUAL_AMOUNT` float(8,2) DEFAULT '0.00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_billing_in_detail_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_billing_in_detail_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_billing_in_detail_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_billing_summary`
+--
+
+DROP TABLE IF EXISTS `hms_op_billing_summary`;
+CREATE TABLE `hms_op_billing_summary` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PID` int(20) NOT NULL,
+  `PATIENT_TYPE` varchar(25) DEFAULT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  `TIME_OF_BILLING` varchar(12) NOT NULL,
+  `TOTAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `DISCOUNT_PERCENT` float(8,2) DEFAULT NULL,
+  `DISCOUNT_AMOUNT` float(8,2) DEFAULT NULL,
+  `BALANCE_AMOUNT` float(8,2) DEFAULT NULL,
+  `CASH_AMOUNT` float(8,2) DEFAULT NULL,
+  `CARD_AMOUNT` float(8,2) DEFAULT NULL,
+  `CHEQUE_AMOUNT` float(8,2) DEFAULT NULL,
+  `RECD_AMOUNT` float(8,2) DEFAULT NULL,
+  `REFUND_AMOUNT` float(8,2) DEFAULT NULL,
+  `CASHIER` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(25) DEFAULT NULL,
+  `REMARKS` varchar(400) DEFAULT NULL,
+  `DUE_AMOUNT` float(8,2) DEFAULT NULL,
+  `PATIENT_FROM` varchar(50) DEFAULT NULL,
+  `LAB_NAME` varchar(200) DEFAULT NULL,
+  `REF_DOCTORNAME` varchar(75) DEFAULT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLE_NAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SALUTATION` varchar(10) NOT NULL,
+  `PATIENT_SEX` varchar(10) NOT NULL,
+  `REF_DOCTOR_EMP_ID` int(20) DEFAULT NULL,
+  `LAB_ID` int(20) DEFAULT NULL,
+  `PRINT_STATUS` varchar(15) DEFAULT NULL,
+  `REFERRAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `REFERRERS_PERCENT` float(8,2) DEFAULT '0.00',
+  PRIMARY KEY (`BILL_NUMBER`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_billing_summary`
+--
+
+/*!40000 ALTER TABLE `hms_op_billing_summary` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_billing_summary` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_billing_summary_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_billing_summary_archive`;
+CREATE TABLE `hms_op_billing_summary_archive` (
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PID` int(20) NOT NULL,
+  `PATIENT_TYPE` varchar(25) DEFAULT NULL,
+  `DATE_OF_BILLING` date NOT NULL,
+  `TIME_OF_BILLING` varchar(12) NOT NULL,
+  `TOTAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `DISCOUNT_PERCENT` float(8,2) DEFAULT NULL,
+  `DISCOUNT_AMOUNT` float(8,2) DEFAULT NULL,
+  `BALANCE_AMOUNT` float(8,2) DEFAULT NULL,
+  `CASH_AMOUNT` float(8,2) DEFAULT NULL,
+  `CARD_AMOUNT` float(8,2) DEFAULT NULL,
+  `CHEQUE_AMOUNT` float(8,2) DEFAULT NULL,
+  `RECD_AMOUNT` float(8,2) DEFAULT NULL,
+  `REFUND_AMOUNT` float(8,2) DEFAULT NULL,
+  `CASHIER` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(25) DEFAULT NULL,
+  `REMARKS` varchar(400) DEFAULT NULL,
+  `DUE_AMOUNT` float(8,2) DEFAULT NULL,
+  `PATIENT_FROM` varchar(50) DEFAULT NULL,
+  `LAB_NAME` varchar(200) DEFAULT NULL,
+  `REF_DOCTORNAME` varchar(75) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLE_NAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SALUTATION` varchar(10) NOT NULL,
+  `PATIENT_SEX` varchar(10) NOT NULL,
+  `REF_DOCTOR_EMP_ID` int(20) DEFAULT NULL,
+  `LAB_ID` int(20) DEFAULT NULL,
+  `PRINT_STATUS` varchar(15) DEFAULT NULL,
+  `REFERRAL_AMOUNT` float(8,2) DEFAULT NULL,
+  `REFERRERS_PERCENT` float(8,2) DEFAULT '0.00',
+  PRIMARY KEY (`BILL_NUMBER`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_billing_summary_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_billing_summary_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_billing_summary_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_corporate_details`
+--
+
+DROP TABLE IF EXISTS `hms_op_corporate_details`;
+CREATE TABLE `hms_op_corporate_details` (
+  `PID` int(20) NOT NULL,
+  `EMPLOYER_NAME` varchar(50) DEFAULT NULL,
+  `OCCUPATION` varchar(50) DEFAULT NULL,
+  `COMPANY_ID` varchar(50) DEFAULT NULL,
+  `DATE_OF_REGISTRATION` date NOT NULL,
+  PRIMARY KEY (`PID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_corporate_details`
+--
+
+/*!40000 ALTER TABLE `hms_op_corporate_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_corporate_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_corporate_details_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_corporate_details_archive`;
+CREATE TABLE `hms_op_corporate_details_archive` (
+  `PID` int(20) NOT NULL,
+  `EMPLOYER_NAME` varchar(50) DEFAULT NULL,
+  `OCCUPATION` varchar(50) DEFAULT NULL,
+  `COMPANY_ID` varchar(50) DEFAULT NULL,
+  `DATE_OF_REGISTRATION` date NOT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  PRIMARY KEY (`PID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_corporate_details_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_corporate_details_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_corporate_details_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_doctor_schedule`
+--
+
+DROP TABLE IF EXISTS `hms_op_doctor_schedule`;
+CREATE TABLE `hms_op_doctor_schedule` (
+  `EMP_ID` int(10) NOT NULL,
+  `DOCTOR_NAME` varchar(25) NOT NULL,
+  `DOCTOR_SPECIALITY` varchar(50) DEFAULT NULL,
+  `BASED_ON` varchar(10) DEFAULT NULL,
+  `FROM_DATE` date DEFAULT NULL,
+  `TO_DATE` date DEFAULT NULL,
+  `HOURS_DATE` date DEFAULT NULL,
+  `SLOT1_FROM` varchar(10) DEFAULT NULL,
+  `SLOT1_TO` varchar(10) DEFAULT NULL,
+  `SLOT2_FROM` varchar(10) DEFAULT NULL,
+  `SLOT2_TO` varchar(10) DEFAULT NULL,
+  `SLOT3_FROM` varchar(10) DEFAULT NULL,
+  `SLOT3_TO` varchar(10) DEFAULT NULL,
+  `REASON` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_doctor_schedule`
+--
+
+/*!40000 ALTER TABLE `hms_op_doctor_schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_doctor_schedule` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_insurance_details`
+--
+
+DROP TABLE IF EXISTS `hms_op_insurance_details`;
+CREATE TABLE `hms_op_insurance_details` (
+  `PID` int(20) NOT NULL,
+  `EMPLOYER_NAME` varchar(50) DEFAULT NULL,
+  `OCCUPATION` varchar(50) DEFAULT NULL,
+  `INSURANCE_COMPANY_NAME` varchar(50) DEFAULT NULL,
+  `POLICY_NUMBER` varchar(50) DEFAULT NULL,
+  `ID_CARD_NUMBER` varchar(50) DEFAULT NULL,
+  `DATE_OF_REGISTRATION` date NOT NULL,
+  PRIMARY KEY (`PID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_insurance_details`
+--
+
+/*!40000 ALTER TABLE `hms_op_insurance_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_insurance_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_insurance_details_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_insurance_details_archive`;
+CREATE TABLE `hms_op_insurance_details_archive` (
+  `PID` int(20) NOT NULL,
+  `EMPLOYER_NAME` varchar(50) DEFAULT NULL,
+  `OCCUPATION` varchar(50) DEFAULT NULL,
+  `INSURANCE_COMPANY_NAME` varchar(50) DEFAULT NULL,
+  `POLICY_NUMBER` varchar(50) DEFAULT NULL,
+  `ID_CARD_NUMBER` varchar(50) DEFAULT NULL,
+  `DATE_OF_REGISTRATION` date NOT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  PRIMARY KEY (`PID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_insurance_details_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_insurance_details_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_insurance_details_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_lab_test_param_results`
+--
+
+DROP TABLE IF EXISTS `hms_op_lab_test_param_results`;
+CREATE TABLE `hms_op_lab_test_param_results` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(100) DEFAULT NULL,
+  `LAB_TEST_PARAMETER` varchar(100) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(100) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `ACTUAL_VALUE` varchar(1000) DEFAULT NULL,
+  `NORMAL_LOWER_RANGE` varchar(100) DEFAULT NULL,
+  `NORMAL_UPPER_RANGE` varchar(100) DEFAULT NULL,
+  `LAB_TEST_METRIC` varchar(50) DEFAULT NULL,
+  `IS_NORMAL` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `LAB_TEST_SUB_GROUP` varchar(100) DEFAULT NULL,
+  `PRINT_COUNT` int(20) NOT NULL,
+  `CULTURE_TYPE` varchar(50) DEFAULT NULL,
+  `REPORTGROUP_ID` int(10) DEFAULT NULL,
+  `REPORTTEST_ID` int(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_lab_test_param_results`
+--
+
+/*!40000 ALTER TABLE `hms_op_lab_test_param_results` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_lab_test_param_results` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_op_lab_test_param_results_archive`
+--
+
+DROP TABLE IF EXISTS `hms_op_lab_test_param_results_archive`;
+CREATE TABLE `hms_op_lab_test_param_results_archive` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `VISIT_NUMBER` int(20) DEFAULT NULL,
+  `LAB_TEST_CATEGORY` varchar(50) DEFAULT NULL,
+  `LAB_TEST_PACKAGE_NAME` varchar(100) DEFAULT NULL,
+  `LAB_TEST_PARAMETER` varchar(100) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(100) DEFAULT NULL,
+  `TEST_COMPLETED_DATE` date DEFAULT NULL,
+  `TEST_COMPLETED_TIME` varchar(12) DEFAULT NULL,
+  `ACTUAL_VALUE` varchar(100) DEFAULT NULL,
+  `NORMAL_LOWER_RANGE` varchar(100) DEFAULT NULL,
+  `NORMAL_UPPER_RANGE` varchar(100) DEFAULT NULL,
+  `LAB_TEST_METRIC` varchar(50) DEFAULT NULL,
+  `IS_NORMAL` varchar(10) DEFAULT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `REMARKS` varchar(200) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  `LAB_TEST_SUB_GROUP` varchar(100) DEFAULT NULL,
+  `PRINT_COUNT` int(20) NOT NULL,
+  `CULTURE_TYPE` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_op_lab_test_param_results_archive`
+--
+
+/*!40000 ALTER TABLE `hms_op_lab_test_param_results_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_op_lab_test_param_results_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_patient_details`
+--
+
+DROP TABLE IF EXISTS `hms_patient_details`;
+CREATE TABLE `hms_patient_details` (
+  `PID` int(20) NOT NULL,
+  `DATE_OF_REGISTRATION` date NOT NULL,
+  `TIME_OF_REGISTRATION` varchar(12) DEFAULT NULL,
+  `PATIENT_SALUTATION` varchar(10) NOT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLE_NAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SEX` varchar(10) NOT NULL,
+  `PATIENT_DOB` date DEFAULT NULL,
+  `PATIENT_AGE` varchar(25) DEFAULT NULL,
+  `PATIENT_AGE_MONTHS` varchar(6) DEFAULT NULL,
+  `PATIENT_MARITALSTATUS` varchar(10) DEFAULT NULL,
+  `PATIENT_BLOODGROUP` varchar(10) DEFAULT NULL,
+  `PATIENT_FATHERNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_MOTHERNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SPOUSENAME` varchar(25) DEFAULT NULL,
+  `PATIENT_RELIGION` varchar(10) DEFAULT NULL,
+  `DOOR_NUMBER` varchar(10) DEFAULT NULL,
+  `BUILDING_NAME` varchar(50) DEFAULT NULL,
+  `STREET_NAME` varchar(50) DEFAULT NULL,
+  `AREA_NAME` varchar(50) DEFAULT NULL,
+  `PATIENT_CITY` varchar(20) NOT NULL,
+  `PATIENT_STATE` varchar(30) DEFAULT NULL,
+  `PATIENT_PINCODE` varchar(10) DEFAULT NULL,
+  `PATIENT_PHONENUMBER_RESIDENCE` varchar(12) DEFAULT NULL,
+  `PATIENT_PHONENUMBER_OFFICE` varchar(12) DEFAULT NULL,
+  `PATIENT_MOBILENUMBER` varchar(12) DEFAULT NULL,
+  `PATIENT_EMAIL` varchar(50) DEFAULT NULL,
+  `DATE_OF_UPDATE` date DEFAULT NULL,
+  `GUARDIAN_NAME` varchar(25) DEFAULT NULL,
+  `GUARDIAN_RELATION` varchar(20) DEFAULT NULL,
+  `GUARDIAN_PHONE_NUMBER` varchar(11) DEFAULT NULL,
+  `AGE_GROUP_CODE_PREFIX` varchar(1) DEFAULT NULL,
+  `PATIENT_NATIONALITY` varchar(25) DEFAULT NULL,
+  `PATIENT_TYPE` varchar(50) DEFAULT NULL,
+  `SOURCE_SAMPLE` varchar(20) NOT NULL,
+  `BIOPSY_NO` varchar(20) DEFAULT NULL,
+  `REFERRED_BY` varchar(50) NOT NULL,
+  `PATIENT_FROM` varchar(50) DEFAULT NULL,
+  `CYTOLOGY_NO` varchar(20) DEFAULT NULL,
+  `BILLING_TYPE` varchar(50) DEFAULT NULL,
+  `COMPANY_NAME` varchar(100) DEFAULT NULL,
+  `PACKAGE_NAME` varchar(100) DEFAULT NULL,
+  `INSURANCE_NAME` varchar(100) DEFAULT NULL,
+  `AUTHORISATION_STATUS` varchar(100) DEFAULT NULL,
+  `PAYMENT_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_NAME` varchar(200) DEFAULT NULL,
+  `PATIENT_AGE_DAYS` varchar(6) DEFAULT NULL,
+  `AGE_TYPE` varchar(6) DEFAULT NULL,
+  `PASSPORTNUMBER` varchar(12) DEFAULT NULL,
+  `SUB_DOCTOR` varchar(50) NOT NULL,
+  `EMAIL_ID` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`PID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_patient_details`
+--
+
+/*!40000 ALTER TABLE `hms_patient_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_patient_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_patient_details_archive`
+--
+
+DROP TABLE IF EXISTS `hms_patient_details_archive`;
+CREATE TABLE `hms_patient_details_archive` (
+  `PID` int(20) NOT NULL,
+  `DATE_OF_REGISTRATION` date NOT NULL,
+  `TIME_OF_REGISTRATION` varchar(12) DEFAULT NULL,
+  `PATIENT_SALUTATION` varchar(10) NOT NULL,
+  `PATIENT_FIRSTNAME` varchar(25) NOT NULL,
+  `PATIENT_MIDDLE_NAME` varchar(25) DEFAULT NULL,
+  `PATIENT_LASTNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SEX` varchar(10) NOT NULL,
+  `PATIENT_DOB` date DEFAULT NULL,
+  `PATIENT_AGE` varchar(25) DEFAULT NULL,
+  `PATIENT_AGE_MONTHS` varchar(6) DEFAULT NULL,
+  `PATIENT_MARITALSTATUS` varchar(10) DEFAULT NULL,
+  `PATIENT_BLOODGROUP` varchar(10) DEFAULT NULL,
+  `PATIENT_FATHERNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_MOTHERNAME` varchar(25) DEFAULT NULL,
+  `PATIENT_SPOUSENAME` varchar(25) DEFAULT NULL,
+  `PATIENT_RELIGION` varchar(10) DEFAULT NULL,
+  `DOOR_NUMBER` varchar(10) DEFAULT NULL,
+  `BUILDING_NAME` varchar(50) DEFAULT NULL,
+  `STREET_NAME` varchar(50) DEFAULT NULL,
+  `AREA_NAME` varchar(50) DEFAULT NULL,
+  `PATIENT_CITY` varchar(20) NOT NULL,
+  `PATIENT_STATE` varchar(30) DEFAULT NULL,
+  `PATIENT_PINCODE` varchar(10) DEFAULT NULL,
+  `PATIENT_PHONENUMBER_RESIDENCE` varchar(12) DEFAULT NULL,
+  `PATIENT_PHONENUMBER_OFFICE` varchar(12) DEFAULT NULL,
+  `PATIENT_MOBILENUMBER` varchar(12) DEFAULT NULL,
+  `PATIENT_EMAIL` varchar(50) DEFAULT NULL,
+  `DATE_OF_UPDATE` date DEFAULT NULL,
+  `GUARDIAN_NAME` varchar(25) DEFAULT NULL,
+  `GUARDIAN_RELATION` varchar(20) DEFAULT NULL,
+  `GUARDIAN_PHONE_NUMBER` varchar(11) DEFAULT NULL,
+  `AGE_GROUP_CODE_PREFIX` varchar(1) DEFAULT NULL,
+  `PATIENT_NATIONALITY` varchar(25) DEFAULT NULL,
+  `PATIENT_TYPE` varchar(50) DEFAULT NULL,
+  `SOURCE_SAMPLE` varchar(20) NOT NULL,
+  `BIOPSY_NO` varchar(20) DEFAULT NULL,
+  `REFERRED_BY` varchar(50) NOT NULL,
+  `PATIENT_FROM` varchar(50) DEFAULT NULL,
+  `CYTOLOGY_NO` varchar(20) DEFAULT NULL,
+  `BILLING_TYPE` varchar(50) DEFAULT NULL,
+  `COMPANY_NAME` varchar(100) DEFAULT NULL,
+  `PACKAGE_NAME` varchar(100) DEFAULT NULL,
+  `INSURANCE_NAME` varchar(100) DEFAULT NULL,
+  `AUTHORISATION_STATUS` varchar(100) DEFAULT NULL,
+  `PAYMENT_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_NAME` varchar(200) DEFAULT NULL,
+  `PATIENT_AGE_DAYS` varchar(6) DEFAULT NULL,
+  `AGE_TYPE` varchar(6) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL,
+  `PASSPORTNUMBER` varchar(12) DEFAULT NULL,
+  `SUB_DOCTOR` varchar(50) NOT NULL,
+  `EMAIL_ID` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`PID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_patient_details_archive`
+--
+
+/*!40000 ALTER TABLE `hms_patient_details_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_patient_details_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_pharma_main_archive_tables_dtls`
+--
+
+DROP TABLE IF EXISTS `hms_pharma_main_archive_tables_dtls`;
+CREATE TABLE `hms_pharma_main_archive_tables_dtls` (
+  `MAIN_TABLE_NAME` varchar(100) NOT NULL,
+  `ARCHIVE_TABLE_NAME` varchar(100) NOT NULL,
+  `COLUMN_NAME` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_pharma_main_archive_tables_dtls`
+--
+
+/*!40000 ALTER TABLE `hms_pharma_main_archive_tables_dtls` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_pharma_main_archive_tables_dtls` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_pharmacy_archive_dtls`
+--
+
+DROP TABLE IF EXISTS `hms_pharmacy_archive_dtls`;
+CREATE TABLE `hms_pharmacy_archive_dtls` (
+  `FREQUENCY_OPTION` int(6) NOT NULL,
+  `QUANTITY` int(6) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_pharmacy_archive_dtls`
+--
+
+/*!40000 ALTER TABLE `hms_pharmacy_archive_dtls` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_pharmacy_archive_dtls` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_pharmacy_finyear_details`
+--
+
+DROP TABLE IF EXISTS `hms_pharmacy_finyear_details`;
+CREATE TABLE `hms_pharmacy_finyear_details` (
+  `FIN_YEAR` varchar(10) NOT NULL,
+  `ORG_FIN_YEAR` varchar(10) NOT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`),
+  UNIQUE KEY `FIN_YEAR` (`FIN_YEAR`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_pharmacy_finyear_details`
+--
+
+/*!40000 ALTER TABLE `hms_pharmacy_finyear_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_pharmacy_finyear_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_pharmacy_updated_archived_date`
+--
+
+DROP TABLE IF EXISTS `hms_pharmacy_updated_archived_date`;
+CREATE TABLE `hms_pharmacy_updated_archived_date` (
+  `ARCHIVED_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_pharmacy_updated_archived_date`
+--
+
+/*!40000 ALTER TABLE `hms_pharmacy_updated_archived_date` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_pharmacy_updated_archived_date` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_ref_doc_percentage`
+--
+
+DROP TABLE IF EXISTS `hms_ref_doc_percentage`;
+CREATE TABLE `hms_ref_doc_percentage` (
+  `DEPTID` int(6) NOT NULL,
+  `DEPTNAME` varchar(25) NOT NULL,
+  `DOCTOR_NAME` varchar(50) NOT NULL,
+  `DOCTORID` int(6) NOT NULL,
+  `REFERRAL_PER` int(6) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_ref_doc_percentage`
+--
+
+/*!40000 ALTER TABLE `hms_ref_doc_percentage` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_ref_doc_percentage` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_sms_for_report_results`
+--
+
+DROP TABLE IF EXISTS `hms_sms_for_report_results`;
+CREATE TABLE `hms_sms_for_report_results` (
+  `TEMPLATE_TITLE` varchar(100) NOT NULL,
+  `CATEGORY` varchar(100) NOT NULL,
+  `TEMPLATE_TYPE` varchar(100) NOT NULL,
+  `MESSAGE` text,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `ID` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_sms_for_report_results`
+--
+
+/*!40000 ALTER TABLE `hms_sms_for_report_results` DISABLE KEYS */;
+INSERT INTO `hms_sms_for_report_results` (`TEMPLATE_TITLE`,`CATEGORY`,`TEMPLATE_TYPE`,`MESSAGE`,`ID`) VALUES 
+ ('one','','','rwerew',1),
+ ('one','','','rwerew',2),
+ ('two','','','scafsaf',3),
+ ('one','','','rwerew',4),
+ ('one','','','rwerew',5),
+ ('two','','','scafsaf',6);
+/*!40000 ALTER TABLE `hms_sms_for_report_results` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_upload_labreport_details`
+--
+
+DROP TABLE IF EXISTS `hms_upload_labreport_details`;
+CREATE TABLE `hms_upload_labreport_details` (
+  `FILENAME` varchar(30) DEFAULT NULL,
+  `image` longblob,
+  `reportname` varchar(200) NOT NULL,
+  `testname` varchar(60) DEFAULT NULL,
+  `PID` int(20) NOT NULL,
+  `PATIENTNAME` varchar(50) DEFAULT NULL,
+  `REPORTDATE` date DEFAULT NULL,
+  `BIOPSY_NO` varchar(20) DEFAULT NULL,
+  `CYTOLOGY_NO` varchar(20) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `STATUS` varchar(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_upload_labreport_details`
+--
+
+/*!40000 ALTER TABLE `hms_upload_labreport_details` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_upload_labreport_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_upload_labreport_details_archive`
+--
+
+DROP TABLE IF EXISTS `hms_upload_labreport_details_archive`;
+CREATE TABLE `hms_upload_labreport_details_archive` (
+  `FILENAME` varchar(100) DEFAULT NULL,
+  `image` longblob,
+  `reportname` varchar(200) NOT NULL,
+  `testname` varchar(60) DEFAULT NULL,
+  `PID` int(20) NOT NULL,
+  `PATIENTNAME` varchar(50) DEFAULT NULL,
+  `REPORTDATE` date DEFAULT NULL,
+  `BIOPSY_NO` varchar(20) DEFAULT NULL,
+  `CYTOLOGY_NO` varchar(20) DEFAULT NULL,
+  `LAB_TEST_TYPE` varchar(50) DEFAULT NULL,
+  `LAB_PACKAGE_NAME` varchar(50) DEFAULT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `STATUS` varchar(15) DEFAULT NULL,
+  `ARCHIVE_DATE` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_upload_labreport_details_archive`
+--
+
+/*!40000 ALTER TABLE `hms_upload_labreport_details_archive` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_upload_labreport_details_archive` ENABLE KEYS */;
+
+
+--
+-- Definition of table `hms_users_results_entry_smry`
+--
+
+DROP TABLE IF EXISTS `hms_users_results_entry_smry`;
+CREATE TABLE `hms_users_results_entry_smry` (
+  `PID` int(20) NOT NULL,
+  `BILL_NUMBER` int(20) NOT NULL,
+  `PATIENT_NAME` varchar(100) NOT NULL,
+  `DATE` date NOT NULL,
+  `TIME` varchar(12) NOT NULL,
+  `REMARKS` text,
+  `LOGIN_USER` varchar(50) NOT NULL,
+  `USER_STATUS` varchar(12) DEFAULT NULL,
+  `ID` int(6) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hms_users_results_entry_smry`
+--
+
+/*!40000 ALTER TABLE `hms_users_results_entry_smry` DISABLE KEYS */;
+/*!40000 ALTER TABLE `hms_users_results_entry_smry` ENABLE KEYS */;
+
+
+--
+-- Definition of table `save_image`
+--
+
+DROP TABLE IF EXISTS `save_image`;
+CREATE TABLE `save_image` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) DEFAULT NULL,
+  `city` varchar(20) DEFAULT NULL,
+  `image` longblob,
+  `Phone` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `save_image`
+--
+
+/*!40000 ALTER TABLE `save_image` DISABLE KEYS */;
+/*!40000 ALTER TABLE `save_image` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
